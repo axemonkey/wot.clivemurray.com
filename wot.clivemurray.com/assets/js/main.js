@@ -117,15 +117,10 @@ const initWot = () => {
 				ctx.beginPath();
 				ctx.moveTo(centrePoint, centrePoint);
 				ctx.lineTo(centrePoint + lineX, centrePoint + lineY);
-				// ctx.lineTo(centrePoint + nextLineX, centrePoint + nextLineY);
-				// ctx.lineTo(centrePoint + lineX, centrePoint + lineY);
 				ctx.arc(centrePoint, centrePoint, radius, degToRad(angle), degToRad(nextAngle), false);
 
 				ctx.fillStyle = `rgb(${getRandRGB()})`;
 				ctx.fill();
-
-				// ctx.strokeStyle = `rgb(${getRandRGB()})`;
-				// ctx.stroke();
 
 				ctx.closePath();
 
@@ -149,10 +144,6 @@ const initWot = () => {
 			pctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
 			pctx.fill();
 		}
-		// ctx.beginPath();
-		// ctx.arc(centrePoint, centrePoint, radius, 0, Math.PI * 2, true);
-		// ctx.fillStyle = 'rgb(200, 200, 0)';
-		// ctx.fill();
 
 		spinIt();
 	}
