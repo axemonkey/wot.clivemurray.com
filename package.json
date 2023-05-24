@@ -1,0 +1,82 @@
+{
+  "name": "WheelOfThings",
+  "version": "0.3.0",
+  "private": "true",
+  "scripts": {
+    "start": "node server.js",
+    "servedev": "npx nodemon server.js",
+    "lint-tooling": "npx eslint '*.js' 'tooling/**/*.js'",
+
+    "build": "npm-run-all buildsite:*",
+    "lint": "npm-run-all lint:*:* lint-tooling",
+    "dev": "npm-run-all lint build watch",
+    "watch": "npm-run-all --parallel watchsite:*",
+
+    "buildsite:wot.clivemurray.com": "node tooling/clean.js wot.clivemurray.com && npm-run-all build:*:wot",
+    "watchsite:wot.clivemurray.com": "npm-run-all --parallel watch:*:wot",
+    "devsite:wot.clivemurray.com": "npm-run-all lint:*:wot buildsite:wot.clivemurray.com watchsite:wot.clivemurray.com",
+    "lint:js:wot": "npx eslint wot.clivemurray.com",
+    "lint:styles:wot": "npm-run-all prettify:wot stylelint:wot",
+    "prettify:wot": "prettier './wot.clivemurray.com/assets/styles/**/*.scss' --write",
+    "stylelint:wot": "stylelint './wot.clivemurray.com/assets/styles/**/*.scss' --customSyntax postcss-scss",
+    "build:copyassets:wot": "node tooling/copy-assets.js wot.clivemurray.com fonts",
+    "build:images:wot": "node tooling/process-images.js wot.clivemurray.com",
+    "build:styles:wot": "node tooling/build-css.js wot.clivemurray.com",
+    "build:js:wot": "node tooling/build-js.js wot.clivemurray.com",
+    "watch:assets:wot": "onchange './wot.clivemurray.com/assets/fonts' -- npm run build:copyassets:wot",
+    "watch:images:wot": "onchange './wot.clivemurray.com/assets/images/**/*' -- npm run build:images:wot",
+    "watch:styles:wot": "onchange './wot.clivemurray.com/assets/styles/**/*.scss' -- npm-run-all lint:styles:wot build:styles:wot",
+    "watch:js:wot": "onchange './wot.clivemurray.com/assets/js/**/*.js' -- npm-run-all lint:js:wot build:js:wot"
+  },
+  "author": "Clive Murray <clive+murray@clivemurray.com>",
+  "license": "UNLICENSED",
+  "type": "module",
+  "browserslist": [
+    ">0.3%, last 5 versions, not dead"
+  ],
+  "engines": {
+    "node": "18.16.0"
+  },
+  "devDependencies": {
+    "eslint": "7.17.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-no-use-extend-native": "0.5.0",
+    "eslint-plugin-promise": "4.3.1",
+    "eslint-plugin-unicorn": "28.0.2",
+    "@springernature/eslint-config": "5.0.5",
+    "nodemon": "2.0.20",
+    "onchange": "7.1.0",
+    "stylelint": "14.16.1",
+    "stylelint-config-prettier": "9.0.4",
+    "stylelint-config-standard-scss": "6.1.0",
+    "stylelint-scss": "4.3.0"
+  },
+  "dependencies": {
+    "@babel/core": "7.20.12",
+    "@babel/plugin-proposal-object-rest-spread": "7.20.7",
+    "@babel/plugin-transform-object-assign": "7.18.6",
+    "@babel/preset-env": "7.20.2",
+    "@rollup/plugin-babel": "6.0.3",
+    "@rollup/plugin-commonjs": "24.0.0",
+    "@rollup/plugin-node-resolve": "15.0.1",
+    "autoprefixer": "10.4.13",
+    "del": "7.0.0",
+    "npm-run-all": "4.1.5",
+    "postcss": "8.4.21",
+    "postcss-csso": "6.0.1",
+    "postcss-custom-properties": "12.1.11",
+    "postcss-scss": "4.0.6",
+    "prettier": "2.8.2",
+    "rollup": "3.9.1",
+    "sass": "1.57.1",
+    "sharp": "0.31.3",
+    "svgo": "3.0.2",
+    "connect": "3.7.0",
+    "express": "4.18.2",
+    "express-handlebars": "6.0.6",
+    "handlebars": "4.7.7",
+    "moment": "2.29.4",
+    "svg-social-icons": "1.1.0",
+    "util": "0.12.5"
+  }
+}

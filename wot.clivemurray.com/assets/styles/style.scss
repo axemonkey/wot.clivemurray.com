@@ -1,0 +1,103 @@
+@font-face {
+	font-family: OswaldLight;
+	src: url("/fonts/Oswald-Light.woff2") format("woff2"),
+		url("/fonts/Oswald-Light.woff") format("woff");
+	font-weight: normal;
+	font-style: normal;
+}
+
+$itemFont: "OswaldLight", sans-serif;
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html,
+body {
+	height: 100%;
+	font-family: helvetica, sans-serif;
+	color: #000;
+	background-color: #000;
+}
+
+body {
+	background-color: #000;
+	color: #336;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+main,
+article {
+	position: relative;
+	width: 800px;
+	height: 800px;
+	overflow: hidden;
+}
+
+main {
+	// background-color: #111;
+}
+
+.wheel {
+	width: 800px;
+	height: 800px;
+}
+
+.pointer {
+	width: 100px;
+	height: 40px;
+	position: absolute;
+	right: 0;
+	top: 380px;
+}
+
+.optionText {
+	position: absolute;
+
+	p {
+		text-align: right;
+		margin: 0;
+		font-family: $itemFont;
+		font-size: 26px;
+		padding-right: 30px;
+		color: #fff;
+		text-shadow: #909 1px 0 10px;
+	}
+}
+
+.loser {
+	opacity: 0.4;
+}
+
+.throbber {
+	animation: throbbe 1s ease-in-out infinite alternate;
+}
+
+.spinning {
+	animation-name: spin360, spin360;
+	animation-duration: 2s, 1s;
+	animation-delay: 0ms, 2s; /* add this */
+	animation-timing-function: ease-in, linear;
+	animation-iteration-count: 1, infinite;
+}
+
+@keyframes spin360 {
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes throbbe {
+	from {
+		text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #f0f, 0 0 40px #0ff,
+			0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+	}
+
+	to {
+		text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6,
+			0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+	}
+}
