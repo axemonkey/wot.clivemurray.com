@@ -1,4 +1,11 @@
 @font-face {
+	font-family: "Bodoni72OldStyle";
+	src: url("/fonts/BodoniSvtyTwoOSITCTT-BookIt.woff2") format("woff2"),
+		url("/fonts/BodoniSvtyTwoOSITCTT-BookIt.woff") format("woff");
+	font-weight: normal;
+	font-style: italic;
+}
+@font-face {
 	font-family: OswaldLight;
 	src: url("/fonts/Oswald-Light.woff2") format("woff2"),
 		url("/fonts/Oswald-Light.woff") format("woff");
@@ -6,6 +13,7 @@
 	font-style: normal;
 }
 
+$headingFont: "Bodoni72OldStyle", serif;
 $itemFont: "OswaldLight", sans-serif;
 
 * {
@@ -40,6 +48,24 @@ body {
 	background-color: #303;
 }
 
+header {
+	padding: 10px;
+}
+
+h1,
+h2 {
+	font-family: $headingFont;
+	text-align: center;
+}
+
+h1 {
+	font-size: 4rem;
+}
+
+h2 {
+	font-size: 2.5rem;
+}
+
 main {
 	position: relative;
 	width: 100%;
@@ -50,12 +76,9 @@ main {
 
 .nojs {
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-}
-
-h2 {
-	text-align: center;
 }
 
 article {
@@ -101,13 +124,14 @@ article {
 .spinning {
 	animation-name: spin360, spin360;
 	animation-duration: 2s, 1s;
-	animation-delay: 0ms, 2s; /* add this */
+	animation-delay: 0ms, 2s;
 	animation-timing-function: ease-in, linear;
 	animation-iteration-count: 1, infinite;
 }
 
 .buttons {
 	display: flex;
+	padding: 10px;
 }
 
 button {
