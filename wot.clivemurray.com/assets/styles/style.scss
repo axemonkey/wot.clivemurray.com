@@ -17,33 +17,55 @@ html,
 body {
 	height: 100%;
 	font-family: helvetica, sans-serif;
-	color: #000;
 	background-color: #000;
 }
 
 body {
-	background-color: #000;
-	color: #336;
+	color: #fff;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 
-main,
-article {
-	position: relative;
-	width: 800px;
-	height: 800px;
-	overflow: hidden;
+.hide {
+	display: none;
+}
+
+#wrapper {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: #303;
 }
 
 main {
-	// background-color: #111;
+	position: relative;
+	width: 100%;
+	margin: auto;
+	overflow: hidden;
+	flex-grow: 1;
+}
+
+.nojs {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+h2 {
+	text-align: center;
+}
+
+article {
+	position: relative;
+	overflow: hidden;
 }
 
 .wheel {
-	width: 800px;
-	height: 800px;
+	// width: 800px;
+	// height: 800px;
 }
 
 .pointer {
@@ -61,7 +83,7 @@ main {
 		text-align: right;
 		margin: 0;
 		font-family: $itemFont;
-		font-size: 26px;
+		font-size: 25px;
 		padding-right: 30px;
 		color: #fff;
 		text-shadow: #909 1px 0 10px;
@@ -82,6 +104,24 @@ main {
 	animation-delay: 0ms, 2s; /* add this */
 	animation-timing-function: ease-in, linear;
 	animation-iteration-count: 1, infinite;
+}
+
+.buttons {
+	display: flex;
+}
+
+button {
+	font-size: 2rem;
+	font-family: $itemFont;
+	padding: 1rem 2rem;
+	border-radius: 1rem;
+	border: none;
+	cursor: pointer;
+	opacity: 0.1;
+}
+
+button.yay {
+	opacity: 1;
 }
 
 @keyframes spin360 {

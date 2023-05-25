@@ -12,6 +12,28 @@ wotApp.set('views', `${appFolder}/views`);
 wotApp.set('view engine', 'hbs');
 wotApp.use(express.static(`${appFolder}/public`));
 
+const games = [
+	'Munchkin',
+	'Escape the Dark Castle',
+	'Unearth',
+	'Star Fluxx',
+	'Doomlings',
+	'Dragonwood',
+	'Dragonrealm',
+	'Forgotten Island',
+	'Forgotten Desert ',
+	'Forgotten Sky',
+	'Labyrinth',
+	'Boss Monster',
+	'Boss Monster: The Next Level',
+	'Selfish: Zombie Edition',
+	'Selfish: Space Edition',
+];
+
+wotApp.get('/games', (req, res) => {
+	res.redirect(`/?things=${games.join(',')}`);
+});
+
 wotApp.get('/', (req, res) => {
 	res.render('index');
 });

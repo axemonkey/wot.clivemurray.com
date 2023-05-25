@@ -1,20 +1,13 @@
-const things = [
-	'Munchkin',
-	'Escape the Dark Castle',
-	'Unearth',
-	'Star Fluxx',
-	'Doomlings',
-	'Dragonwood',
-	'Dragonrealm',
-	'Forgotten Island',
-	'Forgotten Desert ',
-	'Forgotten Sky',
-	'Labyrinth',
-	'Boss Monster',
-	'Boss Monster: The Next Level',
-	'Selfish: Zombie Edition',
-	'Selfish: Space Edition',
-];
+/*
+TODO:
+* multiple default sets, choose one at random if no things provided
+* max 20 things
+*/
+
+const defaultThings = ['Pizza', 'Burger', 'Thai', 'Fryup', 'Curry'];
+const params = new URLSearchParams(document.location.search);
+const providedThings = params.get('things');
+const things = providedThings ? providedThings.split(',') : defaultThings;
 
 const shuffle = arr => { // randomly rearanges the items in an array
 	const result = [];
@@ -25,7 +18,7 @@ const shuffle = arr => { // randomly rearanges the items in an array
 		for (let j = 0, k = 0; j <= arr.length - 1; j++) {
 			if (result[j] === undefined) {
 				if (k === r) {
-					result[j] = arr[i]; // NOTE: if array contains objects, this doesn't clone them! Use a better clone function instead, if that is needed.
+					result[j] = arr[i].trim(); // NOTE: if array contains objects, this doesn't clone them! Use a better clone function instead, if that is needed.
 					break;
 				}
 				k++;
@@ -37,10 +30,22 @@ const shuffle = arr => { // randomly rearanges the items in an array
 
 const randomThings = shuffle(things);
 
-const spinIt = () => {
+const resetOptionClasses = () => {
+	const options = document.querySelectorAll('.option');
+	for (const optionItem of options) {
+		optionItem.classList.remove('loser');
+		optionItem.classList.remove('throbber');
+		optionItem.classList.remove('winner');
+	}
+};
+
+const start = () => {
 	const el = document.querySelector('article');
-	// el.style.transform = `rotate(0deg)`;
+	el.style.transform = `rotate(0deg)`;
 	el.classList.add('spinning');
+	resetOptionClasses();
+	document.querySelector('#start').classList.add('hide');
+	document.querySelector('#stop').classList.remove('hide');
 };
 
 const degToRad = deg => {
@@ -78,29 +83,46 @@ const makeText = (index, container, radius, angle, padding) => {
 	newTextDiv.style.transform = `rotate(${angle}deg)`;
 };
 
+const setupMain = () => {
+	const boundingEl = document.querySelector('main');
+	boundingEl.innerHTML = '';
+	const newArticle = document.createElement('article');
+	const wheelCanvas = document.createElement('canvas');
+	const pointerCanvas = document.createElement('canvas');
+	wheelCanvas.classList.add('wheel');
+	pointerCanvas.classList.add('pointer');
+	newArticle.append(wheelCanvas);
+	boundingEl.append(newArticle);
+	boundingEl.append(pointerCanvas);
+
+	const buttons = document.querySelectorAll('.buttons button');
+	for (const button of buttons) {
+		button.classList.add('yay');
+	}
+};
+
 const initWot = () => {
-	console.log(`WOT`);
+	setupMain();
 
 	const container = document.querySelector('article');
 	const canvas = document.querySelector('.wheel');
 	if (canvas.getContext) {
 		const ctx = canvas.getContext('2d');
-		// const vis = window.visualViewport;
-		// const maxDim = Math.min(vis.width, vis.height);
-		const maxDim = 800;
+		const boundingEl = document.querySelector('main');
+		const maxDim = Math.min(boundingEl.offsetWidth, boundingEl.offsetHeight);
+		// console.log(`maxDim: ${maxDim}`);
 		const centrePoint = maxDim / 2;
 		const padding = 10;
 		const radius = centrePoint - padding;
 		const sectionAngle = 360 / randomThings.length;
-		console.log(`sectionAngle: ${sectionAngle}`);
+		// console.log(`sectionAngle: ${sectionAngle}`);
 
+		boundingEl.style.width = `${maxDim}px`;
 		canvas.width = maxDim;
 		canvas.height = maxDim;
 
 		for (let index in randomThings) {
 			if (Object.hasOwn(randomThings, index)) {
-				// console.log(`thing: ${thing}`);
-
 				// draw segments
 				index = Number.parseInt(index, 10);
 				const angle = index * sectionAngle;
@@ -109,31 +131,49 @@ const initWot = () => {
 				const lineY = (radius * sinDeg(angle));
 				const nextAngle = (index + 1) * sectionAngle;
 				const nextAngleRad = degToRad(nextAngle);
-				// const nextLineX = (radius * cosDeg(nextAngle));
-				// const nextLineY = (radius * sinDeg(nextAngle));
-
-				console.log(`index: ${index}, lineX: ${lineX}, lineY: ${lineY}, angle: ${angle}, nextAngle: ${nextAngle}, angleRad: ${angleRad}, nextAngleRad: ${nextAngleRad}`);
 
 				ctx.beginPath();
 				ctx.moveTo(centrePoint, centrePoint);
 				ctx.lineTo(centrePoint + lineX, centrePoint + lineY);
-				ctx.arc(centrePoint, centrePoint, radius, degToRad(angle), degToRad(nextAngle), false);
-
+				ctx.arc(centrePoint, centrePoint, radius, angleRad, nextAngleRad, false);
 				ctx.fillStyle = `rgb(${getRandRGB()})`;
 				ctx.fill();
-
 				ctx.closePath();
 
-				// draw text
-				console.log(randomThings[index]);
+				// render text DIVs
 				const textAngle = Number.parseInt(-angle - (sectionAngle / 2), 10);
 				makeText(index, container, radius, textAngle, padding);
 			}
 		}
 
+		ctx.lineWidth = 2;
+		ctx.strokeStyle = 'rgb(0, 0, 0)';
+
+		// draw dividing lines
+		for (const index in randomThings) {
+			if (Object.hasOwn(randomThings, index)) {
+				const angle = index * sectionAngle;
+				const lineX = (radius * cosDeg(angle));
+				const lineY = (radius * sinDeg(angle));
+				ctx.beginPath();
+				ctx.moveTo(centrePoint, centrePoint);
+				ctx.lineTo(centrePoint + lineX, centrePoint + lineY);
+				ctx.stroke();
+				ctx.closePath();
+			}
+		}
+
+		// draw circle
+		ctx.beginPath();
+		ctx.moveTo(centrePoint, centrePoint);
+		ctx.arc(centrePoint, centrePoint, radius, 0, Math.PI * 2, true);
+		ctx.stroke();
+		ctx.closePath();
+
 		// draw pointer
 		const pointerCanvas = document.querySelector('.pointer');
 		if (pointerCanvas.getContext) {
+			pointerCanvas.style.top = `${centrePoint - 20}px`;
 			const pctx = pointerCanvas.getContext('2d');
 			pointerCanvas.width = 100;
 			pointerCanvas.height = 40;
@@ -145,7 +185,7 @@ const initWot = () => {
 			pctx.fill();
 		}
 
-		spinIt();
+		// start();
 	}
 };
 
@@ -165,9 +205,8 @@ const getTarget = forceTarget => {
 	document.querySelector(`#option${targetThingIndex}`).classList.add('winner');
 	const sectionAngle = 360 / randomThings.length;
 	const targetRotation = Math.round((targetThingIndex * sectionAngle) + (sectionAngle / 2));
-	console.log(`target item: ${randomThings[targetThingIndex]}`);
-	// console.log(`currentRotation: ${currentRotation}`);
-	console.log(`targetRotation: ${targetRotation}`);
+	// console.log(`target item: ${randomThings[targetThingIndex]}`);
+	// console.log(`targetRotation: ${targetRotation}`);
 	const extraSpins = 3;
 	return targetRotation + (extraSpins * 360);
 };
@@ -182,14 +221,14 @@ const getCurrentRotation = () => {
 };
 
 const stop = forceTarget => {
-	console.log('stop');
+	document.querySelector('#stop').classList.remove('yay');
 	const el = document.querySelector('article');
 	const currentRotation = getCurrentRotation();
-	console.log(currentRotation);
 	el.classList.remove('spinning');
+	el.classList.add('stopping');
 	el.style.transform = `rotate(${currentRotation}deg)`;
 	const targetRotation = getTarget(forceTarget);
-	console.log(`targetRotation: ${targetRotation}`);
+	// console.log(`targetRotation: ${targetRotation}`);
 
 	const spinToStop = [
 		{
@@ -209,19 +248,40 @@ const stop = forceTarget => {
 	el.animate(spinToStop, spinToStopTiming);
 	window.setTimeout(() => {
 		el.style.transform = `rotate(${targetRotation}deg)`;
+		el.classList.remove('stopping');
 		highlightWinner();
+		document.querySelector('#start').classList.remove('hide');
+		document.querySelector('#stop').classList.add('hide');
+		document.querySelector('#stop').classList.add('yay');
 	}, 3000);
 };
 
+const toggle = () => {
+	const container = document.querySelector('article');
+	if (!container.classList.contains('stopping')) {
+		if (container.classList.contains('spinning')) {
+			stop();
+		} else {
+			start();
+		}
+	}
+};
+
 window.addEventListener('load', initWot);
+window.addEventListener('resize', initWot);
 window.addEventListener('keydown', e => {
 	if (e.key === ' ') {
-		stop();
+		toggle();
 	}
 	if (e.key === 'Enter') {
 		console.log(getCurrentRotation());
 	}
-	if (e.key === '0' || e.key === '1' || e.key === '2' || e.key === '3' || e.key === '4' || e.key === '5') {
-		stop(e.key);
-	}
+});
+
+document.querySelector('#start').addEventListener('click', () => {
+	start();
+});
+
+document.querySelector('#stop').addEventListener('click', () => {
+	stop();
 });
