@@ -34,6 +34,10 @@ wotApp.get('/games', (req, res) => {
 	res.redirect(`/?things=${games.join(',')}`);
 });
 
+wotApp.get('/things', (req, res) => {
+	res.render('things');
+});
+
 wotApp.get('/', (req, res) => {
 	res.render('index');
 });

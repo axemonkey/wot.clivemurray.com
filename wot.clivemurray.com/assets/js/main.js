@@ -1,7 +1,9 @@
 /*
 TODO:
-* multiple default sets, choose one at random if no things provided
 * max 20 things
+* maxlength of things
+* add things to form
+* remove things from form
 */
 
 const defaultThings = [
@@ -18,8 +20,6 @@ const pickDefaultThings = () => {
 const params = new URLSearchParams(document.location.search);
 const providedThings = params.get('things');
 const things = providedThings ? providedThings.split(',') : pickDefaultThings();
-
-console.log(things);
 
 const shuffle = arr => { // randomly rearanges the items in an array
 	const result = [];
@@ -114,90 +114,90 @@ const setupMain = () => {
 };
 
 const initWot = () => {
-	setupMain();
+	if (document.querySelector('#wheelHolder')) {
+		setupMain();
 
-	const container = document.querySelector('article');
-	const canvas = document.querySelector('.wheel');
-	if (canvas.getContext) {
-		const ctx = canvas.getContext('2d');
-		const boundingEl = document.querySelector('main');
-		const maxDim = Math.min(boundingEl.offsetWidth, boundingEl.offsetHeight);
-		// console.log(`maxDim: ${maxDim}`);
-		const centrePoint = maxDim / 2;
-		const padding = 10;
-		const radius = centrePoint - padding;
-		const sectionAngle = 360 / randomThings.length;
-		// console.log(`sectionAngle: ${sectionAngle}`);
+		const container = document.querySelector('article');
+		const canvas = document.querySelector('.wheel');
+		if (canvas.getContext) {
+			const ctx = canvas.getContext('2d');
+			const boundingEl = document.querySelector('main');
+			const maxDim = Math.min(boundingEl.offsetWidth, boundingEl.offsetHeight);
+			// console.log(`maxDim: ${maxDim}`);
+			const centrePoint = maxDim / 2;
+			const padding = 10;
+			const radius = centrePoint - padding;
+			const sectionAngle = 360 / randomThings.length;
+			// console.log(`sectionAngle: ${sectionAngle}`);
 
-		boundingEl.style.width = `${maxDim}px`;
-		canvas.width = maxDim;
-		canvas.height = maxDim;
+			boundingEl.style.width = `${maxDim}px`;
+			canvas.width = maxDim;
+			canvas.height = maxDim;
 
-		for (let index in randomThings) {
-			if (Object.hasOwn(randomThings, index)) {
-				// draw segments
-				index = Number.parseInt(index, 10);
-				const angle = index * sectionAngle;
-				const angleRad = degToRad(angle);
-				const lineX = (radius * cosDeg(angle));
-				const lineY = (radius * sinDeg(angle));
-				const nextAngle = (index + 1) * sectionAngle;
-				const nextAngleRad = degToRad(nextAngle);
+			for (let index in randomThings) {
+				if (Object.hasOwn(randomThings, index)) {
+					// draw segments
+					index = Number.parseInt(index, 10);
+					const angle = index * sectionAngle;
+					const angleRad = degToRad(angle);
+					const lineX = (radius * cosDeg(angle));
+					const lineY = (radius * sinDeg(angle));
+					const nextAngle = (index + 1) * sectionAngle;
+					const nextAngleRad = degToRad(nextAngle);
 
-				ctx.beginPath();
-				ctx.moveTo(centrePoint, centrePoint);
-				ctx.lineTo(centrePoint + lineX, centrePoint + lineY);
-				ctx.arc(centrePoint, centrePoint, radius, angleRad, nextAngleRad, false);
-				ctx.fillStyle = `rgb(${getRandRGB()})`;
-				ctx.fill();
-				ctx.closePath();
+					ctx.beginPath();
+					ctx.moveTo(centrePoint, centrePoint);
+					ctx.lineTo(centrePoint + lineX, centrePoint + lineY);
+					ctx.arc(centrePoint, centrePoint, radius, angleRad, nextAngleRad, false);
+					ctx.fillStyle = `rgb(${getRandRGB()})`;
+					ctx.fill();
+					ctx.closePath();
 
-				// render text DIVs
-				const textAngle = Number.parseInt(-angle - (sectionAngle / 2), 10);
-				makeText(index, container, radius, textAngle, padding);
+					// render text DIVs
+					const textAngle = Number.parseInt(-angle - (sectionAngle / 2), 10);
+					makeText(index, container, radius, textAngle, padding);
+				}
+			}
+
+			ctx.lineWidth = 2;
+			ctx.strokeStyle = 'rgb(0, 0, 0)';
+
+			// draw dividing lines
+			for (const index in randomThings) {
+				if (Object.hasOwn(randomThings, index)) {
+					const angle = index * sectionAngle;
+					const lineX = (radius * cosDeg(angle));
+					const lineY = (radius * sinDeg(angle));
+					ctx.beginPath();
+					ctx.moveTo(centrePoint, centrePoint);
+					ctx.lineTo(centrePoint + lineX, centrePoint + lineY);
+					ctx.stroke();
+					ctx.closePath();
+				}
+			}
+
+			// draw circle
+			ctx.beginPath();
+			ctx.moveTo(centrePoint, centrePoint);
+			ctx.arc(centrePoint, centrePoint, radius, 0, Math.PI * 2, true);
+			ctx.stroke();
+			ctx.closePath();
+
+			// draw pointer
+			const pointerCanvas = document.querySelector('.pointer');
+			if (pointerCanvas.getContext) {
+				pointerCanvas.style.top = `${centrePoint - 20}px`;
+				const pctx = pointerCanvas.getContext('2d');
+				pointerCanvas.width = 100;
+				pointerCanvas.height = 40;
+				pctx.beginPath();
+				pctx.moveTo(100, 40);
+				pctx.lineTo(100, 0);
+				pctx.lineTo(60, 20);
+				pctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+				pctx.fill();
 			}
 		}
-
-		ctx.lineWidth = 2;
-		ctx.strokeStyle = 'rgb(0, 0, 0)';
-
-		// draw dividing lines
-		for (const index in randomThings) {
-			if (Object.hasOwn(randomThings, index)) {
-				const angle = index * sectionAngle;
-				const lineX = (radius * cosDeg(angle));
-				const lineY = (radius * sinDeg(angle));
-				ctx.beginPath();
-				ctx.moveTo(centrePoint, centrePoint);
-				ctx.lineTo(centrePoint + lineX, centrePoint + lineY);
-				ctx.stroke();
-				ctx.closePath();
-			}
-		}
-
-		// draw circle
-		ctx.beginPath();
-		ctx.moveTo(centrePoint, centrePoint);
-		ctx.arc(centrePoint, centrePoint, radius, 0, Math.PI * 2, true);
-		ctx.stroke();
-		ctx.closePath();
-
-		// draw pointer
-		const pointerCanvas = document.querySelector('.pointer');
-		if (pointerCanvas.getContext) {
-			pointerCanvas.style.top = `${centrePoint - 20}px`;
-			const pctx = pointerCanvas.getContext('2d');
-			pointerCanvas.width = 100;
-			pointerCanvas.height = 40;
-			pctx.beginPath();
-			pctx.moveTo(100, 40);
-			pctx.lineTo(100, 0);
-			pctx.lineTo(60, 20);
-			pctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-			pctx.fill();
-		}
-
-		// start();
 	}
 };
 
@@ -279,21 +279,40 @@ const toggle = () => {
 	}
 };
 
-window.addEventListener('load', initWot);
-window.addEventListener('resize', initWot);
-window.addEventListener('keydown', e => {
-	if (e.key === ' ') {
-		toggle();
+const submitThings = () => {
+	const thingEntries = document.querySelectorAll('.thingEntry input');
+	const values = [];
+	for (const thingEntry of thingEntries) {
+		values.push(thingEntry.value);
 	}
-	if (e.key === 'Enter') {
-		console.log(getCurrentRotation());
-	}
-});
+	document.location.href = `/?things=${values.join(',')}`;
+};
 
-document.querySelector('#start').addEventListener('click', () => {
-	start();
-});
+// events
+if (document.querySelector('#wheelHolder')) {
+	window.addEventListener('load', initWot);
+	window.addEventListener('resize', initWot);
+	window.addEventListener('keydown', e => {
+		if (e.key === ' ') {
+			toggle();
+		}
+		if (e.key === 'Enter') {
+			console.log(getCurrentRotation());
+		}
+	});
 
-document.querySelector('#stop').addEventListener('click', () => {
-	stop();
-});
+	document.querySelector('#start').addEventListener('click', () => {
+		start();
+	});
+
+	document.querySelector('#stop').addEventListener('click', () => {
+		stop();
+	});
+}
+
+if (document.querySelector('#enterThings')) {
+	document.querySelector('#go').addEventListener('click', event => {
+		event.preventDefault();
+		submitThings();
+	});
+}
