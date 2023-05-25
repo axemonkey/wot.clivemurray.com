@@ -4,10 +4,22 @@ TODO:
 * max 20 things
 */
 
-const defaultThings = ['Pizza', 'Burger', 'Thai', 'Fryup', 'Curry'];
+const defaultThings = [
+	['Pizza', 'Burger', 'Thai', 'Fryup', 'Curry'],
+	['Horror', 'Comedy', 'Action', 'Drama', 'Sci-Fi', 'Documentary', 'Thriller'],
+	['Iron Man', 'Captain America', 'The Hulk', 'Thor', 'Ant-Man', 'Doctor Strange', 'Spider-Man', 'Black Panther', 'Captain Marvel', 'Scarlet Witch', 'Black Widow', 'Hawkeye', 'Vision'],
+	['Star Wars', 'Star Trek', 'Harry Potter', 'Lord of the Rings', 'The Avengers', 'Batman', 'James Bond'],
+];
+
+const pickDefaultThings = () => {
+	return defaultThings[Math.floor(Math.random() * defaultThings.length)];
+};
+
 const params = new URLSearchParams(document.location.search);
 const providedThings = params.get('things');
-const things = providedThings ? providedThings.split(',') : defaultThings;
+const things = providedThings ? providedThings.split(',') : pickDefaultThings();
+
+console.log(things);
 
 const shuffle = arr => { // randomly rearanges the items in an array
 	const result = [];
