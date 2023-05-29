@@ -50,6 +50,9 @@ body {
 
 header {
 	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 h1,
@@ -88,11 +91,6 @@ main {
 article {
 	position: relative;
 	overflow: hidden;
-}
-
-.wheel {
-	// width: 800px;
-	// height: 800px;
 }
 
 .pointer {
@@ -134,8 +132,12 @@ article {
 }
 
 .buttons {
-	display: flex;
+	display: none;
 	padding: 10px;
+
+	body.js & {
+		display: flex;
+	}
 }
 
 button {
@@ -156,6 +158,12 @@ button.form-button {
 	padding: 0.5rem;
 	border-radius: 0.25rem;
 	opacity: 1;
+}
+
+button#change {
+	opacity: 1;
+	font-size: 1rem;
+	padding: 0.5rem 1rem;
 }
 
 fieldset {

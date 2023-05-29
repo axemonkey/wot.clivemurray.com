@@ -1,13 +1,11 @@
 /*
 TODO:
 *** MAIN PAGE
-* link to "edit things", prepopulate the things form
 
 *** FORM PAGE
-* when loading, populate things from wheel
 * clear things - reset to 2 blank things
-* maxlength of things
 * validation - no empty things
+* URL encode things - ampersand breaks it at the moment
 */
 
 const minThings = 2;
@@ -24,9 +22,17 @@ const pickDefaultThings = () => {
 	return defaultThings[Math.floor(Math.random() * defaultThings.length)];
 };
 
-const params = new URLSearchParams(document.location.search);
-const providedThings = params.get('things');
-const things = providedThings ? providedThings.split(',') : pickDefaultThings();
+const getThingsFromURL = () => {
+	let urlThings;
+	const params = new URLSearchParams(document.location.search);
+	if (params.get('things')) {
+		urlThings = params.get('things').split(',');
+	}
+	return urlThings;
+};
+
+const providedThings = getThingsFromURL();
+const things = providedThings ? providedThings : pickDefaultThings();
 
 const shuffle = arr => { // randomly rearanges the items in an array
 	const result = [];
@@ -120,8 +126,15 @@ const setupMain = () => {
 	}
 };
 
+const changeThings = () => {
+	console.log(randomThings);
+	const url = `/things?things=${randomThings.join(',')}`;
+	document.location.href = url;
+};
+
 const initWot = () => {
 	if (document.querySelector('#wheelHolder')) {
+		document.body.classList.add('js');
 		setupMain();
 
 		const container = document.querySelector('article');
@@ -286,6 +299,26 @@ const toggle = () => {
 	}
 };
 
+const initForm = () => {
+	const urlThings = getThingsFromURL();
+
+	console.log(urlThings);
+
+	if (urlThings && urlThings.length >= 2) {
+		// remove all things
+		const allThings = document.querySelector('.all-things');
+		const theThings = allThings.querySelectorAll('.thing-entry');
+
+		for (const thisThing of theThings) {
+			thisThing.parentNode.removeChild(thisThing);
+		}
+
+		for (const urlThing of urlThings) {
+			addThing(urlThing);
+		}
+	}
+};
+
 const submitThings = () => {
 	const thingEntries = document.querySelectorAll('.thing-entry input');
 	const values = [];
@@ -295,7 +328,7 @@ const submitThings = () => {
 	document.location.href = `/?things=${values.join(',')}`;
 };
 
-const addThing = () => {
+const addThing = thingValue => {
 	const allThings = document.querySelector('.all-things');
 	const theThings = allThings.querySelectorAll('.thing-entry');
 	const currentNumberOfThings = theThings.length;
@@ -306,14 +339,16 @@ const addThing = () => {
 		const newThingLabel = document.createElement('label');
 		const newThingInput = document.createElement('input');
 		const newThingRemoveButton = document.createElement('button');
+		const newThingValue = thingValue || `Thing ${currentNumberOfThings + 1}`;
 
 		newThingDiv.classList.add('thing-entry');
 		newThingLabel.setAttribute('for', `thing${currentNumberOfThings + 1}`);
 		newThingLabel.innerHTML = `Thing ${currentNumberOfThings + 1}`;
 		newThingInput.setAttribute('type', 'text');
+		newThingInput.setAttribute('maxlength', 30);
 		newThingInput.setAttribute('name', `thing${currentNumberOfThings + 1}`);
 		newThingInput.id = `thing${currentNumberOfThings + 1}`;
-		newThingInput.value = `Thing ${currentNumberOfThings + 1}`;
+		newThingInput.value = newThingValue;
 		newThingRemoveButton.classList.add('removeThing');
 		newThingRemoveButton.classList.add('form-button');
 		newThingRemoveButton.innerHTML = 'Remove this thing';
@@ -386,9 +421,15 @@ if (document.querySelector('#wheelHolder')) {
 	document.querySelector('#stop').addEventListener('click', () => {
 		stop();
 	});
+
+	document.querySelector('#change').addEventListener('click', () => {
+		changeThings();
+	});
 }
 
 if (document.querySelector('#enter-things')) {
+	window.addEventListener('load', initForm);
+
 	document.querySelector('#go').addEventListener('click', event => {
 		event.preventDefault();
 		submitThings();
