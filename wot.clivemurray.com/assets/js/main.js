@@ -127,7 +127,6 @@ const setupMain = () => {
 };
 
 const changeThings = () => {
-	console.log(randomThings);
 	const url = `/things?things=${randomThings.join(',')}`;
 	document.location.href = url;
 };
@@ -302,8 +301,6 @@ const toggle = () => {
 const initForm = () => {
 	const urlThings = getThingsFromURL();
 
-	console.log(urlThings);
-
 	if (urlThings && urlThings.length >= 2) {
 		// remove all things
 		const allThings = document.querySelector('.all-things');
@@ -374,8 +371,6 @@ const renumberThings = () => {
 		const theThingLabel = theThing.querySelector('label');
 		const theThingInput = theThing.querySelector('input');
 
-		console.log(theThing);
-
 		theThingLabel.setAttribute('for', `thing${index + 1}`);
 		theThingLabel.innerHTML = `Thing ${index + 1}`;
 		theThingInput.setAttribute('name', `thing${index + 1}`);
@@ -384,9 +379,6 @@ const renumberThings = () => {
 };
 
 const removeThing = thingButton => {
-	console.log(minThings);
-	console.log(thingButton.parentNode);
-
 	const allThings = document.querySelector('.all-things');
 	const theThings = allThings.querySelectorAll('.thing-entry');
 	const currentNumberOfThings = theThings.length;
