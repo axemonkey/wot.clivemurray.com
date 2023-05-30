@@ -132,7 +132,7 @@ const changeThings = () => {
 };
 
 const initWot = () => {
-	if (document.querySelector('#wheelHolder')) {
+	if (document.querySelector('#wheel-holder')) {
 		document.body.classList.add('js');
 		setupMain();
 
@@ -412,7 +412,7 @@ const resetThings = () => {
 };
 
 // events
-if (document.querySelector('#wheelHolder')) {
+if (document.querySelector('#wheel-holder')) {
 	window.addEventListener('load', initWot);
 	window.addEventListener('resize', initWot);
 	window.addEventListener('keydown', e => {
