@@ -3,9 +3,7 @@ TODO:
 *** MAIN PAGE
 
 *** FORM PAGE
-* clear things - reset to 2 blank things
 * validation - no empty things
-* URL encode things - ampersand breaks it at the moment
 */
 
 const minThings = 2;
@@ -26,7 +24,7 @@ const getThingsFromURL = () => {
 	let urlThings;
 	const params = new URLSearchParams(document.location.search);
 	if (params.get('things')) {
-		urlThings = params.get('things').split(',');
+		urlThings = decodeURIComponent(params.get('things')).split(',');
 	}
 	return urlThings;
 };
@@ -127,7 +125,7 @@ const setupMain = () => {
 };
 
 const changeThings = () => {
-	const url = `/things?things=${randomThings.join(',')}`;
+	const url = `/things?things=${encodeURIComponent(randomThings.join(','))}`;
 	document.location.href = url;
 };
 
@@ -252,39 +250,41 @@ const getCurrentRotation = () => {
 };
 
 const stop = forceTarget => {
-	document.querySelector('#stop').classList.remove('yay');
 	const el = document.querySelector('article');
-	const currentRotation = getCurrentRotation();
-	el.classList.remove('spinning');
-	el.classList.add('stopping');
-	el.style.transform = `rotate(${currentRotation}deg)`;
-	const targetRotation = getTarget(forceTarget);
-	// console.log(`targetRotation: ${targetRotation}`);
+	if (!el.classList.contains('stopping')) {
+		document.querySelector('#stop').classList.remove('yay');
+		const currentRotation = getCurrentRotation();
+		el.classList.remove('spinning');
+		el.classList.add('stopping');
+		el.style.transform = `rotate(${currentRotation}deg)`;
+		const targetRotation = getTarget(forceTarget);
+		// console.log(`targetRotation: ${targetRotation}`);
 
-	const spinToStop = [
-		{
-			transform: `rotate(${currentRotation}deg)`,
-		},
-		{
-			transform: `rotate(${targetRotation}deg)`,
-		},
-	];
+		const spinToStop = [
+			{
+				transform: `rotate(${currentRotation}deg)`,
+			},
+			{
+				transform: `rotate(${targetRotation}deg)`,
+			},
+		];
 
-	const spinToStopTiming = {
-		duration: 3000,
-		iterations: 1,
-		easing: 'ease-out',
-	};
+		const spinToStopTiming = {
+			duration: 3000,
+			iterations: 1,
+			easing: 'ease-out',
+		};
 
-	el.animate(spinToStop, spinToStopTiming);
-	window.setTimeout(() => {
-		el.style.transform = `rotate(${targetRotation}deg)`;
-		el.classList.remove('stopping');
-		highlightWinner();
-		document.querySelector('#start').classList.remove('hide');
-		document.querySelector('#stop').classList.add('hide');
-		document.querySelector('#stop').classList.add('yay');
-	}, 3000);
+		el.animate(spinToStop, spinToStopTiming);
+		window.setTimeout(() => {
+			el.style.transform = `rotate(${targetRotation}deg)`;
+			el.classList.remove('stopping');
+			highlightWinner();
+			document.querySelector('#start').classList.remove('hide');
+			document.querySelector('#stop').classList.add('hide');
+			document.querySelector('#stop').classList.add('yay');
+		}, 3000);
+	}
 };
 
 const toggle = () => {
@@ -322,7 +322,7 @@ const submitThings = () => {
 	for (const thingEntry of thingEntries) {
 		values.push(thingEntry.value);
 	}
-	document.location.href = `/?things=${values.join(',')}`;
+	document.location.href = `/?things=${encodeURIComponent(values.join(','))}`;
 };
 
 const addThing = thingValue => {
@@ -393,6 +393,21 @@ const removeThing = thingButton => {
 	}
 };
 
+const resetThings = () => {
+	const allThings = document.querySelector('.all-things');
+	const theThings = allThings.querySelectorAll('.thing-entry');
+
+	for (const thisThing of theThings) {
+		thisThing.parentNode.removeChild(thisThing);
+	}
+
+	let x = 0;
+	while (x < 3) {
+		addThing();
+		x++;
+	}
+};
+
 // events
 if (document.querySelector('#wheelHolder')) {
 	window.addEventListener('load', initWot);
@@ -433,6 +448,10 @@ if (document.querySelector('#enter-things')) {
 	document.querySelector('#addThing').addEventListener('click', event => {
 		event.preventDefault();
 		addThing();
+	});
+	document.querySelector('#resetThings').addEventListener('click', event => {
+		event.preventDefault();
+		resetThings();
 	});
 
 	document.addEventListener('click', event => {
