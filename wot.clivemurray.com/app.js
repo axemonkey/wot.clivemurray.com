@@ -21,7 +21,7 @@ const games = [
 	'Dragonwood',
 	'Dragonrealm',
 	'Forgotten Island',
-	'Forgotten Desert ',
+	'Forgotten Desert',
 	'Forgotten Sky',
 	'Labyrinth',
 	'Boss Monster',
@@ -31,7 +31,7 @@ const games = [
 ];
 
 wotApp.get('/games', (req, res) => {
-	res.redirect(`/?things=${games.join(',')}`);
+	res.redirect(`/?things=${encodeURIComponent(games.join(','))}`);
 });
 
 wotApp.get('/things', (req, res) => {

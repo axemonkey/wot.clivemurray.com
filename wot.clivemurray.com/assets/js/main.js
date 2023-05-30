@@ -4,6 +4,7 @@ TODO:
 
 *** FORM PAGE
 * validation - no empty things
+* fix for Safari (might make it work on mobile?)
 */
 
 const minThings = 2;
