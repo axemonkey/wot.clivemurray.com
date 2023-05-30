@@ -346,6 +346,7 @@ const addThing = thingValue => {
 		newThingInput.setAttribute('name', `thing${currentNumberOfThings + 1}`);
 		newThingInput.id = `thing${currentNumberOfThings + 1}`;
 		newThingInput.value = newThingValue;
+		newThingRemoveButton.setAttribute('tabindex', '-1');
 		newThingRemoveButton.classList.add('removeThing');
 		newThingRemoveButton.classList.add('form-button');
 		newThingRemoveButton.innerHTML = 'Remove this thing';
