@@ -28,8 +28,6 @@ const games = [
 	'Boss Monster: The Next Level',
 	'Selfish: Zombie Edition',
 	'Selfish: Space Edition',
-	'Dobble',
-	'Sushi Go',
 ];
 
 wotApp.get('/games', (req, res) => {
