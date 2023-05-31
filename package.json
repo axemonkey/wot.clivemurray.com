@@ -3,8 +3,7 @@
   "version": "0.3.0",
   "private": "true",
   "scripts": {
-    "start": "npx @11ty/eleventy --input=./wot.clivemurray.com",
-    "servedev": "npx @11ty/eleventy --input=./wot.clivemurray.com --serve",
+    "start": "npx @11ty/eleventy --input=./wot.clivemurray.com --serve",
     "lint-tooling": "npx eslint '*.js' 'tooling/**/*.js'",
     "build": "npm-run-all buildsite:*",
     "lint": "npm-run-all lint:*:* lint-tooling",
