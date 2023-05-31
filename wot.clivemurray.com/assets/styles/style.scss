@@ -1,14 +1,14 @@
 @font-face {
 	font-family: "Bodoni72OldStyle";
-	src: url("/fonts/BodoniSvtyTwoOSITCTT-BookIt.woff2") format("woff2"),
-		url("/fonts/BodoniSvtyTwoOSITCTT-BookIt.woff") format("woff");
+	src: url("/public/fonts/BodoniSvtyTwoOSITCTT-BookIt.woff2") format("woff2"),
+		url("/public/fonts/BodoniSvtyTwoOSITCTT-BookIt.woff") format("woff");
 	font-weight: normal;
 	font-style: italic;
 }
 @font-face {
 	font-family: OswaldLight;
-	src: url("/fonts/Oswald-Light.woff2") format("woff2"),
-		url("/fonts/Oswald-Light.woff") format("woff");
+	src: url("/public/fonts/Oswald-Light.woff2") format("woff2"),
+		url("/public/fonts/Oswald-Light.woff") format("woff");
 	font-weight: normal;
 	font-style: normal;
 }
