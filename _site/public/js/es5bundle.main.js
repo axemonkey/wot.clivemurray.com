@@ -78,7 +78,7 @@
 
   var minThings = 2;
   var maxThings = 20;
-  var gamesThings = ['Munchkin', 'Escape the Dark Castle', 'Unearth', 'Star Fluxx', 'Doomlings', 'Dragonwood', 'Dragonrealm', 'Forgotten Island', 'Forgotten Desert', 'Forgotten Sky', 'Labyrinth', 'Boss Monster', 'Boss Monster: The Next Level', 'Selfish: Zombie Edition', 'Selfish: Space Edition'];
+  var gamesThings = ['Munchkin', 'Escape the Dark Castle', 'Unearth', 'Star Fluxx', 'Martian Fluxx', 'Doomlings', 'Dragonwood', 'Dragonrealm', 'Forgotten Island', 'Forgotten Desert', 'Forgotten Sky', 'Labyrinth', 'Boss Monster', 'Boss Monster: The Next Level', 'Selfish: Zombie Edition', 'Selfish: Space Edition'];
   var defaultThings = [['Pizza', 'Burger', 'Thai', 'Fryup', 'Curry'], ['Horror', 'Comedy', 'Action', 'Drama', 'Sci-Fi', 'Documentary', 'Thriller'], ['Iron Man', 'Captain America', 'The Hulk', 'Thor', 'Ant-Man', 'Doctor Strange', 'Spider-Man', 'Black Panther', 'Captain Marvel', 'Scarlet Witch', 'Black Widow', 'Hawkeye', 'Vision'], ['Star Wars', 'Star Trek', 'Harry Potter', 'Lord of the Rings', 'The Avengers', 'Batman', 'James Bond']];
   var pickDefaultThings = function pickDefaultThings() {
     return defaultThings[Math.floor(Math.random() * defaultThings.length)];
