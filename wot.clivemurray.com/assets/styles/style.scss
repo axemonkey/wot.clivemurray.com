@@ -1,3 +1,31 @@
+@use "sass:math";
+
+@function strip-unit($value) {
+	@return math.div($value, $value * 0 + 1);
+}
+
+/* prettier-ignore */
+@mixin fluid-type($min-vw, $max-vw, $min-font-size, $max-font-size) {
+	$u1: math.unit($min-vw);
+	$u2: math.unit($max-vw);
+	$u3: math.unit($min-font-size);
+	$u4: math.unit($max-font-size);
+
+	@if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
+		& {
+			font-size: $min-font-size;
+			@media screen and (min-width: $min-vw) {
+				font-size: calc(
+					#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
+				);
+			}
+			@media screen and (min-width: $max-vw) {
+				font-size: $max-font-size;
+			}
+		}
+	}
+}
+
 @font-face {
 	font-family: "Bodoni72OldStyle";
 	src: url("/public/fonts/BodoniSvtyTwoOSITCTT-BookIt.woff2") format("woff2"),
@@ -13,6 +41,10 @@
 	font-style: normal;
 }
 
+$min_width: 320px;
+$max_width: 1200px;
+$min_font: 10px;
+$max_font: 20px;
 $headingFont: "Bodoni72OldStyle", georgia, serif;
 $itemFont: "OswaldLight", sans-serif;
 
@@ -26,6 +58,8 @@ body {
 	height: 100%;
 	font-family: helvetica, sans-serif;
 	background-color: #303;
+
+	@include fluid-type($min_width, $max_width, $min_font, $max_font);
 }
 
 body {
@@ -62,16 +96,16 @@ h2 {
 }
 
 h1 {
-	font-size: 4rem;
+	font-size: 4em;
 }
 
 h2 {
-	font-size: 2.5rem;
+	font-size: 2.5em;
 }
 
 p.instruction {
 	font-family: $headingFont;
-	font-size: 1.5rem;
+	font-size: 1.5em;
 	margin: 10px auto;
 }
 
@@ -119,7 +153,7 @@ article {
 		text-align: right;
 		margin: 0;
 		font-family: $itemFont;
-		font-size: 25px;
+		font-size: 1.5em;
 		padding-right: 30px;
 		color: #fff;
 		text-shadow: #909 1px 0 10px;
@@ -154,7 +188,7 @@ body.js .buttons {
 }
 
 button {
-	font-size: 2rem;
+	font-size: 2em;
 	font-family: $itemFont;
 	padding: 1rem 2rem;
 	border-radius: 1rem;
@@ -167,7 +201,7 @@ button.yay {
 }
 
 button.form-button {
-	font-size: 1.5rem;
+	font-size: 1.5em;
 	padding: 0.5rem;
 	border-radius: 0.25rem;
 	opacity: 1;
@@ -175,13 +209,13 @@ button.form-button {
 
 button#change {
 	opacity: 1;
-	font-size: 1rem;
+	font-size: 1em;
 	padding: 0.5rem 1rem;
 }
 
 fieldset {
 	border: none;
-	padding: 1rem;
+	padding: 1em;
 	background-color: #606;
 }
 
@@ -200,17 +234,17 @@ fieldset {
 }
 
 .thing-entry label {
-	font-size: 1.5rem;
+	font-size: 1.5em;
 	font-family: $itemFont;
 }
 
 .thing-entry input {
-	font-size: 1.5rem;
+	font-size: 1.5em;
 	font-family: $itemFont;
 }
 
 .thing-entry button {
-	font-size: 1.5rem;
+	font-size: 1.5em;
 	font-family: $itemFont;
 }
 
