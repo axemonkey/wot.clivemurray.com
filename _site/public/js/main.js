@@ -1,10 +1,9 @@
 /*
 TODO:
 *** MAIN PAGE
+* about / help
 
 *** FORM PAGE
-* validation - no empty things
-* fix for Safari (might make it work on mobile?)
 * url shortcuts for the defaults
 */
 
@@ -352,12 +351,24 @@ const initForm = () => {
 };
 
 const submitThings = () => {
+	let formValid = true;
 	const thingEntries = document.querySelectorAll('.thing-entry input');
 	const values = [];
 	for (const thingEntry of thingEntries) {
-		values.push(thingEntry.value);
+		if (thingEntry.value.length > 0) {
+			thingEntry.classList.remove('invalid');
+			values.push(thingEntry.value);
+		} else {
+			thingEntry.classList.add('invalid');
+			formValid = false;
+		}
 	}
-	document.location.href = `/?things=${encodeURIComponent(values.join(','))}`;
+
+	if (formValid) {
+		document.location.href = `/?things=${encodeURIComponent(values.join(','))}`;
+	} else {
+		console.log('some things are empty');
+	}
 };
 
 const addThing = thingValue => {

@@ -69,10 +69,9 @@
   /*
   TODO:
   *** MAIN PAGE
+  * about / help
 
   *** FORM PAGE
-  * validation - no empty things
-  * fix for Safari (might make it work on mobile?)
   * url shortcuts for the defaults
   */
 
@@ -407,6 +406,7 @@
     }
   };
   var submitThings = function submitThings() {
+    var formValid = true;
     var thingEntries = document.querySelectorAll('.thing-entry input');
     var values = [];
     var _iterator6 = _createForOfIteratorHelper(thingEntries),
@@ -414,14 +414,24 @@
     try {
       for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
         var thingEntry = _step6.value;
-        values.push(thingEntry.value);
+        if (thingEntry.value.length > 0) {
+          thingEntry.classList.remove('invalid');
+          values.push(thingEntry.value);
+        } else {
+          thingEntry.classList.add('invalid');
+          formValid = false;
+        }
       }
     } catch (err) {
       _iterator6.e(err);
     } finally {
       _iterator6.f();
     }
-    document.location.href = "/?things=".concat(encodeURIComponent(values.join(',')));
+    if (formValid) {
+      document.location.href = "/?things=".concat(encodeURIComponent(values.join(',')));
+    } else {
+      console.log('some things are empty');
+    }
   };
   var addThing = function addThing(thingValue) {
     var allThings = document.querySelector('.all-things');

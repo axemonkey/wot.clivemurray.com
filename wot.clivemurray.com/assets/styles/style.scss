@@ -241,6 +241,12 @@ fieldset {
 .thing-entry input {
 	font-size: 1.5em;
 	font-family: $itemFont;
+	border: 5px solid transparent;
+}
+
+.thing-entry input.invalid {
+	border: 5px solid #f00;
+	background-color: #faa;
 }
 
 .thing-entry button {
