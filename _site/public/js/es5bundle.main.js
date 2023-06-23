@@ -68,6 +68,8 @@
 
   /*
   TODO:
+  *** GENERALLY
+
   *** MAIN PAGE
   * about / help
 
@@ -91,7 +93,7 @@
     var urlThings;
     var params = new URLSearchParams(document.location.search);
     if (params.get('things')) {
-      urlThings = decodeURIComponent(params.get('things')).split(',');
+      urlThings = decodeURIComponent(params.get('things')).split('^');
     }
     return urlThings;
   };
@@ -196,7 +198,7 @@
     }
   };
   var changeThings = function changeThings() {
-    var url = "/things?things=".concat(encodeURIComponent(randomThings.join(',')));
+    var url = "/things?things=".concat(encodeURIComponent(randomThings.join('^')));
     document.location = url;
   };
   var initWot = function initWot() {
@@ -327,7 +329,7 @@
     var el = document.querySelector('article');
     var currStyle = window.getComputedStyle(el);
     var currTrans = currStyle.getPropertyValue('transform');
-    var values = currTrans.split('(')[1].split(')')[0].split(',');
+    var values = currTrans.split('(')[1].split(')')[0].split('^');
     var currAngle = Math.round(Math.atan2(values[1], values[0]) * (180 / Math.PI));
     return currAngle > 0 ? currAngle : currAngle + 360;
   };
@@ -428,7 +430,7 @@
       _iterator6.f();
     }
     if (formValid) {
-      document.location.href = "/?things=".concat(encodeURIComponent(values.join(',')));
+      document.location.href = "/?things=".concat(encodeURIComponent(values.join('^')));
     } else {
       console.log('some things are empty');
     }
@@ -523,7 +525,7 @@
         toggle();
       }
       if (e.key === '0') {
-        var url = "/?things=".concat(encodeURIComponent(gamesThings.join(',')));
+        var url = "/?things=".concat(encodeURIComponent(gamesThings.join('^')));
         document.location = url;
       }
       if (e.key === 'Enter') {
