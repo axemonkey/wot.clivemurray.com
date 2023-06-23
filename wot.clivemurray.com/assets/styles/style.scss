@@ -134,7 +134,7 @@ article {
 .spinning {
 	animation-name: spin360, spin360;
 	animation-duration: 2s, 1s;
-	animation-delay: 0ms, 2s;
+	animation-delay: 0ms, 2.01s;
 	animation-timing-function: ease-in, linear;
 	animation-iteration-count: 1, infinite;
 }
