@@ -357,7 +357,7 @@ const submitThings = () => {
 	for (const thingEntry of thingEntries) {
 		if (thingEntry.value.length > 0) {
 			thingEntry.classList.remove('invalid');
-			values.push(thingEntry.value);
+			values.push(encodeURIComponent(thingEntry.value));
 		} else {
 			thingEntry.classList.add('invalid');
 			formValid = false;
