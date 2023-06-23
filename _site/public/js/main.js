@@ -31,10 +31,10 @@ const gamesThings = [
 ];
 
 const defaultThings = [
-	['Pizza', 'Burger', 'Thai', 'Fryup', 'Curry'],
-	['Horror', 'Comedy', 'Action', 'Drama', 'Sci-Fi', 'Documentary', 'Thriller'],
-	['Iron Man', 'Captain America', 'The Hulk', 'Thor', 'Ant-Man', 'Doctor Strange', 'Spider-Man', 'Black Panther', 'Captain Marvel', 'Scarlet Witch', 'Black Widow', 'Hawkeye', 'Vision'],
-	['Star Wars', 'Star Trek', 'Harry Potter', 'Lord of the Rings', 'The Avengers', 'Batman', 'James Bond'],
+	['Pizza', 'Burger', 'Thai', 'Fryup', 'Indian', 'Chinese', 'Sushi'],
+	// ['Horror', 'Comedy', 'Action', 'Drama', 'Sci-Fi', 'Documentary', 'Thriller'],
+	// ['Iron Man', 'Captain America', 'The Hulk', 'Thor', 'Ant-Man', 'Doctor Strange', 'Spider-Man', 'Black Panther', 'Captain Marvel', 'Scarlet Witch', 'Black Widow', 'Hawkeye', 'Vision'],
+	// ['Star Wars', 'Star Trek', 'Harry Potter', 'Lord of the Rings', 'The Avengers', 'Batman', 'James Bond'],
 ];
 
 const pickDefaultThings = () => {
@@ -85,7 +85,7 @@ const resetOptionClasses = () => {
 
 const start = () => {
 	const el = document.querySelector('article');
-	el.style.transform = `rotate(0deg)`;
+	el.style.transform = `perspective(none) rotate(0deg)`;
 	el.classList.add('spinning');
 	resetOptionClasses();
 	document.querySelector('#start').classList.add('hide');
@@ -124,7 +124,7 @@ const makeText = (index, container, radius, angle, padding) => {
 	newTextDiv.style.left = `${padding}px`;
 	newTextDiv.style.top = `calc(50% - ${newTextDiv.offsetHeight / 2}px`;
 	newTextDiv.style.width = `${radius * 2}px`;
-	newTextDiv.style.transform = `rotate(${angle}deg)`;
+	newTextDiv.style.transform = `perspective(none) rotate(${angle}deg)`;
 };
 
 const setupMain = () => {
@@ -266,7 +266,9 @@ const getCurrentRotation = () => {
 	const el = document.querySelector('article');
 	const currStyle = window.getComputedStyle(el);
 	const currTrans = currStyle.getPropertyValue('transform');
+	console.log(currTrans);
 	const values = currTrans.split('(')[1].split(')')[0].split(',');
+	console.log(values);
 	const currAngle = Math.round(Math.atan2(values[1], values[0]) * (180 / Math.PI));
 	return (currAngle > 0 ? currAngle : currAngle + 360);
 };
@@ -278,16 +280,16 @@ const stop = forceTarget => {
 		const currentRotation = getCurrentRotation();
 		el.classList.remove('spinning');
 		el.classList.add('stopping');
-		el.style.transform = `rotate(${currentRotation}deg)`;
+		el.style.transform = `perspective(none) rotate(${currentRotation}deg)`;
 		const targetRotation = getTarget(forceTarget);
 		// console.log(`targetRotation: ${targetRotation}`);
 
 		const spinToStop = [
 			{
-				transform: `rotate(${currentRotation}deg)`,
+				transform: `perspective(none) rotate(${currentRotation}deg)`,
 			},
 			{
-				transform: `rotate(${targetRotation}deg)`,
+				transform: `perspective(none) rotate(${targetRotation}deg)`,
 			},
 		];
 
@@ -299,7 +301,7 @@ const stop = forceTarget => {
 
 		el.animate(spinToStop, spinToStopTiming);
 		window.setTimeout(() => {
-			el.style.transform = `rotate(${targetRotation}deg)`;
+			el.style.transform = `perspective(none) rotate(${targetRotation}deg)`;
 			el.classList.remove('stopping');
 			highlightWinner();
 			document.querySelector('#start').classList.remove('hide');

@@ -79,7 +79,12 @@
   var minThings = 2;
   var maxThings = 20;
   var gamesThings = ['Munchkin', 'Escape the Dark Castle', 'Unearth', 'Star Fluxx', 'Martian Fluxx', 'Doomlings', 'Dragonwood', 'Dragonrealm', 'Forgotten Island', 'Forgotten Desert', 'Forgotten Sky', 'Labyrinth', 'Boss Monster', 'Boss Monster: The Next Level', 'Selfish: Zombie Edition', 'Selfish: Space Edition'];
-  var defaultThings = [['Pizza', 'Burger', 'Thai', 'Fryup', 'Curry'], ['Horror', 'Comedy', 'Action', 'Drama', 'Sci-Fi', 'Documentary', 'Thriller'], ['Iron Man', 'Captain America', 'The Hulk', 'Thor', 'Ant-Man', 'Doctor Strange', 'Spider-Man', 'Black Panther', 'Captain Marvel', 'Scarlet Witch', 'Black Widow', 'Hawkeye', 'Vision'], ['Star Wars', 'Star Trek', 'Harry Potter', 'Lord of the Rings', 'The Avengers', 'Batman', 'James Bond']];
+  var defaultThings = [['Pizza', 'Burger', 'Thai', 'Fryup', 'Indian', 'Chinese', 'Sushi']
+  // ['Horror', 'Comedy', 'Action', 'Drama', 'Sci-Fi', 'Documentary', 'Thriller'],
+  // ['Iron Man', 'Captain America', 'The Hulk', 'Thor', 'Ant-Man', 'Doctor Strange', 'Spider-Man', 'Black Panther', 'Captain Marvel', 'Scarlet Witch', 'Black Widow', 'Hawkeye', 'Vision'],
+  // ['Star Wars', 'Star Trek', 'Harry Potter', 'Lord of the Rings', 'The Avengers', 'Batman', 'James Bond'],
+  ];
+
   var pickDefaultThings = function pickDefaultThings() {
     return defaultThings[Math.floor(Math.random() * defaultThings.length)];
   };
@@ -132,7 +137,7 @@
   };
   var start = function start() {
     var el = document.querySelector('article');
-    el.style.transform = "rotate(0deg)";
+    el.style.transform = "perspective(none) rotate(0deg)";
     el.classList.add('spinning');
     resetOptionClasses();
     document.querySelector('#start').classList.add('hide');
@@ -164,7 +169,7 @@
     newTextDiv.style.left = "".concat(padding, "px");
     newTextDiv.style.top = "calc(50% - ".concat(newTextDiv.offsetHeight / 2, "px");
     newTextDiv.style.width = "".concat(radius * 2, "px");
-    newTextDiv.style.transform = "rotate(".concat(angle, "deg)");
+    newTextDiv.style.transform = "perspective(none) rotate(".concat(angle, "deg)");
   };
   var setupMain = function setupMain() {
     var boundingEl = document.querySelector('main');
@@ -312,7 +317,9 @@
     var el = document.querySelector('article');
     var currStyle = window.getComputedStyle(el);
     var currTrans = currStyle.getPropertyValue('transform');
+    console.log(currTrans);
     var values = currTrans.split('(')[1].split(')')[0].split(',');
+    console.log(values);
     var currAngle = Math.round(Math.atan2(values[1], values[0]) * (180 / Math.PI));
     return currAngle > 0 ? currAngle : currAngle + 360;
   };
@@ -323,14 +330,14 @@
       var currentRotation = getCurrentRotation();
       el.classList.remove('spinning');
       el.classList.add('stopping');
-      el.style.transform = "rotate(".concat(currentRotation, "deg)");
+      el.style.transform = "perspective(none) rotate(".concat(currentRotation, "deg)");
       var targetRotation = getTarget(forceTarget);
       // console.log(`targetRotation: ${targetRotation}`);
 
       var spinToStop = [{
-        transform: "rotate(".concat(currentRotation, "deg)")
+        transform: "perspective(none) rotate(".concat(currentRotation, "deg)")
       }, {
-        transform: "rotate(".concat(targetRotation, "deg)")
+        transform: "perspective(none) rotate(".concat(targetRotation, "deg)")
       }];
       var spinToStopTiming = {
         duration: 3000,
@@ -339,7 +346,7 @@
       };
       el.animate(spinToStop, spinToStopTiming);
       window.setTimeout(function () {
-        el.style.transform = "rotate(".concat(targetRotation, "deg)");
+        el.style.transform = "perspective(none) rotate(".concat(targetRotation, "deg)");
         el.classList.remove('stopping');
         highlightWinner();
         document.querySelector('#start').classList.remove('hide');

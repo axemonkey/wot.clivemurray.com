@@ -110,6 +110,7 @@ article {
 
 .optionText {
 	position: absolute;
+	transform: perspective(none);
 
 	p {
 		text-align: right;
@@ -222,8 +223,12 @@ fieldset {
 }
 
 @keyframes spin360 {
+	0% {
+		transform: perspective(none) rotate(0deg);
+	}
+
 	100% {
-		transform: rotate(360deg);
+		transform: perspective(none) rotate(360deg);
 	}
 }
 
