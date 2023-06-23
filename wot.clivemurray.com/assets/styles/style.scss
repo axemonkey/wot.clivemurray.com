@@ -13,7 +13,7 @@
 	font-style: normal;
 }
 
-$headingFont: "Bodoni72OldStyle", serif;
+$headingFont: "Bodoni72OldStyle", georgia, serif;
 $itemFont: "OswaldLight", sans-serif;
 
 * {
@@ -52,6 +52,7 @@ header {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
 }
 
 h1,
@@ -69,6 +70,7 @@ h2 {
 }
 
 p.instruction {
+	font-family: $headingFont;
 	font-size: 1.5rem;
 	margin: 10px auto;
 }
@@ -78,6 +80,7 @@ main {
 	width: 100%;
 	margin: auto;
 	flex-grow: 1;
+	flex-shrink: 0;
 }
 
 #wheel-holder {
@@ -134,7 +137,7 @@ article {
 .spinning {
 	animation-name: spin360, spin360;
 	animation-duration: 2s, 1s;
-	animation-delay: 0ms, 2.01s;
+	animation-delay: 0ms, 2.05s;
 	animation-timing-function: ease-in, linear;
 	animation-iteration-count: 1, infinite;
 }
@@ -142,10 +145,12 @@ article {
 .buttons {
 	display: none;
 	padding: 10px;
+}
 
-	body.js & {
-		display: flex;
-	}
+body.js .buttons {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 button {

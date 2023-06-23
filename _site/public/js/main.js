@@ -152,8 +152,13 @@ const changeThings = () => {
 };
 
 const initWot = () => {
+	let portrait = false;
 	if (document.querySelector('#wheel-holder')) {
 		document.body.classList.add('js');
+		if (document.body.offsetHeight > document.body.offsetWidth) {
+			document.body.classList.add('portrait');
+			portrait = true;
+		}
 		setupMain();
 
 		const container = document.querySelector('article');
@@ -161,17 +166,35 @@ const initWot = () => {
 		if (canvas.getContext) {
 			const ctx = canvas.getContext('2d');
 			const boundingEl = document.querySelector('main');
+			const headerEl = document.querySelector('header');
+			const buttonsEl = document.querySelector('.buttons');
+			console.log(headerEl, buttonsEl);
 			const maxDim = Math.min(boundingEl.offsetWidth, boundingEl.offsetHeight);
 			// console.log(`maxDim: ${maxDim}`);
 			const centrePoint = maxDim / 2;
+			let verticalCentre = boundingEl.offsetHeight / 2;
 			const padding = 10;
 			const radius = centrePoint - padding;
 			const sectionAngle = 360 / randomThings.length;
 			// console.log(`sectionAngle: ${sectionAngle}`);
 
 			boundingEl.style.width = `${maxDim}px`;
+			boundingEl.style.height = `${maxDim}px`;
 			canvas.width = maxDim;
 			canvas.height = maxDim;
+
+			// if (boundingEl.offsetHeight > maxDim) {
+			// 	const remainder = boundingEl.offsetHeight - maxDim;
+			// 	headerEl.style.height = `${remainder / 2}px`;
+			// 	buttonsEl.style.height = `${remainder / 2}px`;
+			// }
+
+			if (portrait) {
+				boundingEl.style.flexGrow = 0;
+				headerEl.style.flexGrow = 1;
+				buttonsEl.style.flexGrow = 1;
+				verticalCentre = boundingEl.offsetHeight / 2;
+			}
 
 			for (let index in randomThings) {
 				if (Object.hasOwn(randomThings, index)) {
@@ -225,7 +248,7 @@ const initWot = () => {
 			// draw pointer
 			const pointerCanvas = document.querySelector('.pointer');
 			if (pointerCanvas.getContext) {
-				pointerCanvas.style.top = `${centrePoint - 20}px`;
+				pointerCanvas.style.top = `${verticalCentre - 20}px`;
 				const pctx = pointerCanvas.getContext('2d');
 				pointerCanvas.width = 100;
 				pointerCanvas.height = 40;

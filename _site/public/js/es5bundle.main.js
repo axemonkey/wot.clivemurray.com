@@ -202,25 +202,48 @@
     document.location = url;
   };
   var initWot = function initWot() {
+    var portrait = false;
     if (document.querySelector('#wheel-holder')) {
       document.body.classList.add('js');
+      if (document.body.offsetHeight > document.body.offsetWidth) {
+        document.body.classList.add('portrait');
+        portrait = true;
+      }
       setupMain();
       var container = document.querySelector('article');
       var canvas = document.querySelector('.wheel');
       if (canvas.getContext) {
         var ctx = canvas.getContext('2d');
         var boundingEl = document.querySelector('main');
+        var headerEl = document.querySelector('header');
+        var buttonsEl = document.querySelector('.buttons');
+        console.log(headerEl, buttonsEl);
         var maxDim = Math.min(boundingEl.offsetWidth, boundingEl.offsetHeight);
         // console.log(`maxDim: ${maxDim}`);
         var centrePoint = maxDim / 2;
+        var verticalCentre = boundingEl.offsetHeight / 2;
         var padding = 10;
         var radius = centrePoint - padding;
         var sectionAngle = 360 / randomThings.length;
         // console.log(`sectionAngle: ${sectionAngle}`);
 
         boundingEl.style.width = "".concat(maxDim, "px");
+        boundingEl.style.height = "".concat(maxDim, "px");
         canvas.width = maxDim;
         canvas.height = maxDim;
+
+        // if (boundingEl.offsetHeight > maxDim) {
+        // 	const remainder = boundingEl.offsetHeight - maxDim;
+        // 	headerEl.style.height = `${remainder / 2}px`;
+        // 	buttonsEl.style.height = `${remainder / 2}px`;
+        // }
+
+        if (portrait) {
+          boundingEl.style.flexGrow = 0;
+          headerEl.style.flexGrow = 1;
+          buttonsEl.style.flexGrow = 1;
+          verticalCentre = boundingEl.offsetHeight / 2;
+        }
         for (var index in randomThings) {
           if (Object.hasOwn(randomThings, index)) {
             // draw segments
@@ -271,7 +294,7 @@
         // draw pointer
         var pointerCanvas = document.querySelector('.pointer');
         if (pointerCanvas.getContext) {
-          pointerCanvas.style.top = "".concat(centrePoint - 20, "px");
+          pointerCanvas.style.top = "".concat(verticalCentre - 20, "px");
           var pctx = pointerCanvas.getContext('2d');
           pointerCanvas.width = 100;
           pointerCanvas.height = 40;
