@@ -147,7 +147,6 @@ const setupMain = () => {
 
 const changeThings = () => {
 	const url = `/things?things=${encodeURIComponent(randomThings.join(','))}`;
-	console.log(`url: ${url}`);
 	document.location = url;
 };
 
@@ -168,26 +167,17 @@ const initWot = () => {
 			const boundingEl = document.querySelector('main');
 			const headerEl = document.querySelector('header');
 			const buttonsEl = document.querySelector('.buttons');
-			console.log(headerEl, buttonsEl);
 			const maxDim = Math.min(boundingEl.offsetWidth, boundingEl.offsetHeight);
-			// console.log(`maxDim: ${maxDim}`);
 			const centrePoint = maxDim / 2;
 			let verticalCentre = boundingEl.offsetHeight / 2;
 			const padding = 10;
 			const radius = centrePoint - padding;
 			const sectionAngle = 360 / randomThings.length;
-			// console.log(`sectionAngle: ${sectionAngle}`);
 
 			boundingEl.style.width = `${maxDim}px`;
 			boundingEl.style.height = `${maxDim}px`;
 			canvas.width = maxDim;
 			canvas.height = maxDim;
-
-			// if (boundingEl.offsetHeight > maxDim) {
-			// 	const remainder = boundingEl.offsetHeight - maxDim;
-			// 	headerEl.style.height = `${remainder / 2}px`;
-			// 	buttonsEl.style.height = `${remainder / 2}px`;
-			// }
 
 			if (portrait) {
 				boundingEl.style.flexGrow = 0;
@@ -289,9 +279,7 @@ const getCurrentRotation = () => {
 	const el = document.querySelector('article');
 	const currStyle = window.getComputedStyle(el);
 	const currTrans = currStyle.getPropertyValue('transform');
-	console.log(currTrans);
 	const values = currTrans.split('(')[1].split(')')[0].split(',');
-	console.log(values);
 	const currAngle = Math.round(Math.atan2(values[1], values[0]) * (180 / Math.PI));
 	return (currAngle > 0 ? currAngle : currAngle + 360);
 };

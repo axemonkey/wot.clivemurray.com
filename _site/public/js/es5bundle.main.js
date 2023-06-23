@@ -198,7 +198,6 @@
   };
   var changeThings = function changeThings() {
     var url = "/things?things=".concat(encodeURIComponent(randomThings.join(',')));
-    console.log("url: ".concat(url));
     document.location = url;
   };
   var initWot = function initWot() {
@@ -217,27 +216,16 @@
         var boundingEl = document.querySelector('main');
         var headerEl = document.querySelector('header');
         var buttonsEl = document.querySelector('.buttons');
-        console.log(headerEl, buttonsEl);
         var maxDim = Math.min(boundingEl.offsetWidth, boundingEl.offsetHeight);
-        // console.log(`maxDim: ${maxDim}`);
         var centrePoint = maxDim / 2;
         var verticalCentre = boundingEl.offsetHeight / 2;
         var padding = 10;
         var radius = centrePoint - padding;
         var sectionAngle = 360 / randomThings.length;
-        // console.log(`sectionAngle: ${sectionAngle}`);
-
         boundingEl.style.width = "".concat(maxDim, "px");
         boundingEl.style.height = "".concat(maxDim, "px");
         canvas.width = maxDim;
         canvas.height = maxDim;
-
-        // if (boundingEl.offsetHeight > maxDim) {
-        // 	const remainder = boundingEl.offsetHeight - maxDim;
-        // 	headerEl.style.height = `${remainder / 2}px`;
-        // 	buttonsEl.style.height = `${remainder / 2}px`;
-        // }
-
         if (portrait) {
           boundingEl.style.flexGrow = 0;
           headerEl.style.flexGrow = 1;
@@ -340,9 +328,7 @@
     var el = document.querySelector('article');
     var currStyle = window.getComputedStyle(el);
     var currTrans = currStyle.getPropertyValue('transform');
-    console.log(currTrans);
     var values = currTrans.split('(')[1].split(')')[0].split(',');
-    console.log(values);
     var currAngle = Math.round(Math.atan2(values[1], values[0]) * (180 / Math.PI));
     return currAngle > 0 ? currAngle : currAngle + 360;
   };
