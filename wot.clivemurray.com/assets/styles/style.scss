@@ -288,3 +288,22 @@ fieldset {
 			0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
 	}
 }
+
+.support {
+	position: absolute;
+	right: 1em;
+	bottom: 1em;
+
+	p {
+		text-align: right;
+		margin: 0 0 5px;
+	}
+
+	a {
+		color: #eee;
+	}
+
+	a:hover {
+		color: #fff;
+	}
+}
