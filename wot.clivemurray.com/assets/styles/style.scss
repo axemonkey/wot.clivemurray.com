@@ -56,7 +56,7 @@ $itemFont: "OswaldLight", sans-serif;
 html,
 body {
 	height: 100%;
-	font-family: helvetica, sans-serif;
+	font-family: $itemFont;
 	background-color: #303;
 
 	@include fluid-type($min_width, $max_width, $min_font, $max_font);
@@ -121,7 +121,8 @@ main {
 	overflow: hidden;
 }
 
-#enter-things {
+#enter-things,
+#help-copy {
 	max-width: 800px;
 }
 
@@ -213,7 +214,8 @@ button#change {
 	padding: 0.5rem 1rem;
 }
 
-fieldset {
+fieldset,
+.copy-panel {
 	border: none;
 	padding: 1em;
 	background-color: #606;
@@ -289,6 +291,17 @@ fieldset {
 	}
 }
 
+.top-link {
+	position: absolute;
+	right: 1em;
+	top: 1em;
+
+	p {
+		text-align: right;
+		margin: 0 0 5px;
+	}
+}
+
 .support {
 	position: absolute;
 	right: 1em;
@@ -298,12 +311,44 @@ fieldset {
 		text-align: right;
 		margin: 0 0 5px;
 	}
+}
 
-	a {
-		color: #eee;
+.copy-panel {
+	p {
+		font-size: 1.25rem;
+		margin-bottom: 1em;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
 	}
 
-	a:hover {
-		color: #fff;
+	p.lede {
+		font-size: 1.75rem;
+	}
+}
+
+.top-link a,
+.support a,
+.copy-panel a {
+	color: #eee;
+}
+
+.top-link a:hover,
+.support a:hover,
+.copy-panel a:hover {
+	color: #fff;
+}
+
+ul {
+	padding-left: 2em;
+}
+
+ul li {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+
+	&:last-child {
+		margin-bottom: 0;
 	}
 }
