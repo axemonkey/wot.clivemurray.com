@@ -66,17 +66,6 @@
     };
   }
 
-  /*
-  TODO:
-  *** GENERALLY
-
-  *** MAIN PAGE
-  * about / help
-
-  *** FORM PAGE
-  * url shortcuts for the defaults
-  */
-
   var minThings = 2;
   var maxThings = 20;
   var gamesThings = ['Munchkin', 'Escape the Dark Castle', 'Unearth', 'Star Fluxx', 'Martian Fluxx', 'Doomlings', 'Dragonwood', 'Dragonrealm', 'Forgotten Island', 'Forgotten Desert', 'Forgotten Sky', 'Labyrinth', 'Boss Monster', 'Boss Monster: The Next Level', 'Selfish: Zombie Edition', 'Selfish: Space Edition'];
@@ -449,6 +438,7 @@
       newThingDiv.classList.add('thing-entry');
       newThingLabel.setAttribute('for', "thing".concat(currentNumberOfThings + 1));
       newThingLabel.innerHTML = "Thing ".concat(currentNumberOfThings + 1);
+      newThingInput.classList.add('thing-value');
       newThingInput.setAttribute('type', 'text');
       newThingInput.setAttribute('maxlength', 30);
       newThingInput.setAttribute('name', "thing".concat(currentNumberOfThings + 1));
@@ -515,6 +505,14 @@
       x++;
     }
   };
+  var checkInput = function checkInput(event) {
+    var inputEl = event.target;
+    var inputValue = inputEl.value;
+    var matcher = /\^/g;
+    if (matcher.test(inputValue)) {
+      inputEl.value = inputValue.replaceAll('^', '');
+    }
+  };
 
   // events
   if (document.querySelector('#wheel-holder')) {
@@ -564,6 +562,20 @@
       if (event.target.classList.contains('removeThing')) {
         event.preventDefault();
         removeThing(event.target);
+      }
+    });
+    document.addEventListener('keypress', function (event) {
+      if (event.target.classList.contains('thing-value')) {
+        window.setTimeout(function () {
+          checkInput(event);
+        }, 100);
+      }
+    });
+    document.addEventListener('paste', function (event) {
+      if (event.target.classList.contains('thing-value')) {
+        window.setTimeout(function () {
+          checkInput(event);
+        }, 100);
       }
     });
   }

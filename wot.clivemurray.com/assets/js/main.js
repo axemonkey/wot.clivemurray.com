@@ -1,14 +1,3 @@
-/*
-TODO:
-*** GENERALLY
-
-*** MAIN PAGE
-* about / help
-
-*** FORM PAGE
-* url shortcuts for the defaults
-*/
-
 const minThings = 2;
 const maxThings = 20;
 
@@ -389,6 +378,7 @@ const addThing = thingValue => {
 		newThingDiv.classList.add('thing-entry');
 		newThingLabel.setAttribute('for', `thing${currentNumberOfThings + 1}`);
 		newThingLabel.innerHTML = `Thing ${currentNumberOfThings + 1}`;
+		newThingInput.classList.add('thing-value');
 		newThingInput.setAttribute('type', 'text');
 		newThingInput.setAttribute('maxlength', 30);
 		newThingInput.setAttribute('name', `thing${currentNumberOfThings + 1}`);
@@ -457,6 +447,16 @@ const resetThings = () => {
 	}
 };
 
+const checkInput = event => {
+	const inputEl = event.target;
+	const inputValue = inputEl.value;
+	const matcher = /\^/g;
+
+	if (matcher.test(inputValue)) {
+		inputEl.value = inputValue.replaceAll('^', '');
+	}
+};
+
 // events
 if (document.querySelector('#wheel-holder')) {
 	window.addEventListener('load', initWot);
@@ -513,6 +513,21 @@ if (document.querySelector('#enter-things')) {
 		if (event.target.classList.contains('removeThing')) {
 			event.preventDefault();
 			removeThing(event.target);
+		}
+	});
+
+	document.addEventListener('keypress', event => {
+		if (event.target.classList.contains('thing-value')) {
+			window.setTimeout(() => {
+				checkInput(event);
+			}, 100);
+		}
+	});
+	document.addEventListener('paste', event => {
+		if (event.target.classList.contains('thing-value')) {
+			window.setTimeout(() => {
+				checkInput(event);
+			}, 100);
 		}
 	});
 }
