@@ -1,29 +1,26 @@
 {
   "name": "WheelOfThings",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": "true",
   "scripts": {
     "start": "npx @11ty/eleventy --input=./wot.clivemurray.com --serve",
     "lint-tooling": "npx eslint '*.js' 'tooling/**/*.js'",
-    "build": "npm-run-all buildsite:*",
-    "lint": "npm-run-all lint:*:* lint-tooling",
+    "build": "node tooling/clean.js wot.clivemurray.com && npm-run-all build:*",
+    "lint": "npm-run-all lint:* lint-tooling",
     "dev": "npm-run-all lint build watch",
-    "watch": "npm-run-all --parallel watchsite:*",
-    "buildsite:wot.clivemurray.com": "node tooling/clean.js wot.clivemurray.com && npm-run-all build:*:wot",
-    "watchsite:wot.clivemurray.com": "npm-run-all --parallel watch:*:wot",
-    "devsite:wot.clivemurray.com": "npm-run-all lint:*:wot buildsite:wot.clivemurray.com watchsite:wot.clivemurray.com",
-    "lint:js:wot": "npx eslint wot.clivemurray.com",
-    "lint:styles:wot": "npm-run-all prettify:wot stylelint:wot",
-    "prettify:wot": "prettier './wot.clivemurray.com/assets/styles/**/*.scss' --write",
-    "stylelint:wot": "stylelint './wot.clivemurray.com/assets/styles/**/*.scss' --customSyntax postcss-scss",
-    "build:copyassets:wot": "node tooling/copy-assets.js wot.clivemurray.com fonts",
-    "build:images:wot": "node tooling/process-images.js wot.clivemurray.com",
-    "build:styles:wot": "node tooling/build-css.js wot.clivemurray.com",
-    "build:js:wot": "node tooling/build-js.js wot.clivemurray.com",
-    "watch:assets:wot": "onchange './wot.clivemurray.com/assets/fonts' -- npm run build:copyassets:wot",
-    "watch:images:wot": "onchange './wot.clivemurray.com/assets/images/**/*' -- npm run build:images:wot",
-    "watch:styles:wot": "onchange './wot.clivemurray.com/assets/styles/**/*.scss' -- npm-run-all lint:styles:wot build:styles:wot",
-    "watch:js:wot": "onchange './wot.clivemurray.com/assets/js/**/*.js' -- npm-run-all lint:js:wot build:js:wot"
+    "watch": "npm-run-all --parallel watch:*",
+    "lint:js": "npx eslint wot.clivemurray.com",
+    "lint:styles": "npm-run-all prettify stylelint",
+    "prettify": "prettier './wot.clivemurray.com/assets/styles/**/*.scss' --write",
+    "stylelint": "stylelint './wot.clivemurray.com/assets/styles/**/*.scss' --customSyntax postcss-scss",
+    "build:copyassets": "node tooling/copy-assets.js wot.clivemurray.com fonts",
+    "build:images": "node tooling/process-images.js wot.clivemurray.com",
+    "build:styles": "node tooling/build-css.js wot.clivemurray.com",
+    "build:js": "node tooling/build-js.js wot.clivemurray.com",
+    "watch:assets": "onchange './wot.clivemurray.com/assets/fonts' -- npm run build:copyassets",
+    "watch:images": "onchange './wot.clivemurray.com/assets/images/**/*' -- npm run build:images",
+    "watch:styles": "onchange './wot.clivemurray.com/assets/styles/**/*.scss' -- npm-run-all lint:styles build:styles",
+    "watch:js": "onchange './wot.clivemurray.com/assets/js/**/*.js' -- npm-run-all lint:js build:js"
   },
   "author": "Clive Murray <clive+murray@clivemurray.com>",
   "license": "UNLICENSED",
@@ -32,7 +29,7 @@
     ">0.3%, last 5 versions, not dead"
   ],
   "engines": {
-    "node": "20.2.0"
+    "node": "20.3.1"
   },
   "devDependencies": {
     "nodemon": "2.0.20",
