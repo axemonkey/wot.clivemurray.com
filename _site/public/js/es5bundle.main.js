@@ -66,28 +66,6 @@
     };
   }
 
-  /*
-
-  TODO:
-  * split this up into modules
-  * separate JS bundle for wheel page and form page
-  * some kind of clever font sizing for mobile/portrait layout
-  * examples button (inline modal?) on wheel page
-
-  */
-
-  var minThings = 2;
-  var maxThings = 20;
-  var gamesThings = ['Munchkin', 'Escape the Dark Castle', 'Unearth', 'Star Fluxx', 'Martian Fluxx', 'Doomlings', 'Dragonwood', 'Dragonrealm', 'Forbidden Island', 'Forbidden Desert', 'Forbidden Sky', 'Labyrinth', 'Boss Monster', 'Boss Monster: The Next Level', 'Selfish: Zombie Edition', 'Selfish: Space Edition'];
-  var defaultThings = [['Pizza', 'Burger', 'Thai', 'Fryup', 'Indian', 'Chinese', 'Sushi', 'Pasta', 'Tex-Mex']
-  // ['Horror', 'Comedy', 'Action', 'Drama', 'Sci-Fi', 'Documentary', 'Thriller'],
-  // ['Iron Man', 'Captain America', 'The Hulk', 'Thor', 'Ant-Man', 'Doctor Strange', 'Spider-Man', 'Black Panther', 'Captain Marvel', 'Scarlet Witch', 'Black Widow', 'Hawkeye', 'Vision'],
-  // ['Star Wars', 'Star Trek', 'Harry Potter', 'Lord of the Rings', 'The Avengers', 'Batman', 'James Bond'],
-  ];
-
-  var pickDefaultThings = function pickDefaultThings() {
-    return defaultThings[Math.floor(Math.random() * defaultThings.length)];
-  };
   var getThingsFromURL = function getThingsFromURL() {
     var urlThings;
     var params = new URLSearchParams(document.location.search);
@@ -96,8 +74,6 @@
     }
     return urlThings;
   };
-  var providedThings = getThingsFromURL();
-  var things = providedThings ? providedThings : pickDefaultThings();
   var shuffle = function shuffle(arr) {
     // randomly rearanges the items in an array
     var result = [];
@@ -117,32 +93,7 @@
     }
     return result;
   };
-  var randomThings = shuffle(things);
-  var resetOptionClasses = function resetOptionClasses() {
-    var options = document.querySelectorAll('.option');
-    var _iterator = _createForOfIteratorHelper(options),
-      _step;
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var optionItem = _step.value;
-        optionItem.classList.remove('loser');
-        optionItem.classList.remove('throbber');
-        optionItem.classList.remove('winner');
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-  };
-  var start = function start() {
-    var el = document.querySelector('article');
-    el.style.transform = "perspective(none) rotate(0deg)";
-    el.classList.add('spinning');
-    resetOptionClasses();
-    document.querySelector('#start').classList.add('hide');
-    document.querySelector('#stop').classList.remove('hide');
-  };
+
   var degToRad = function degToRad(deg) {
     return Number.parseInt(deg, 10) * Math.PI / 180;
   };
@@ -152,6 +103,7 @@
   var sinDeg = function sinDeg(angle) {
     return Math.sin(degToRad(Number.parseInt(angle, 10)));
   };
+
   var getRandColourValue = function getRandColourValue() {
     return (Math.floor(Math.random() * 6) + 4) * 20;
   };
@@ -161,10 +113,11 @@
     var b = getRandColourValue();
     return "".concat(r, ", ").concat(g, ", ").concat(b);
   };
-  var makeText = function makeText(index, container, radius, angle, padding) {
+
+  var makeText = function makeText(index, text, container, radius, angle, padding) {
     var newTextDiv = document.createElement('div');
     newTextDiv.classList.add('optionText');
-    newTextDiv.innerHTML = "<p class=\"option\" id=\"option".concat(index, "\">").concat(randomThings[index], "</p>");
+    newTextDiv.innerHTML = "<p class=\"option\" id=\"option".concat(index, "\">").concat(text, "</p>");
     container.append(newTextDiv);
     newTextDiv.style.left = "".concat(padding, "px");
     newTextDiv.style.top = "calc(50% - ".concat(newTextDiv.offsetHeight / 2, "px");
@@ -183,24 +136,20 @@
     boundingEl.append(newArticle);
     boundingEl.append(pointerCanvas);
     var buttons = document.querySelectorAll('.buttons button');
-    var _iterator2 = _createForOfIteratorHelper(buttons),
-      _step2;
+    var _iterator = _createForOfIteratorHelper(buttons),
+      _step;
     try {
-      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-        var button = _step2.value;
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var button = _step.value;
         button.classList.add('yay');
       }
     } catch (err) {
-      _iterator2.e(err);
+      _iterator.e(err);
     } finally {
-      _iterator2.f();
+      _iterator.f();
     }
   };
-  var changeThings = function changeThings() {
-    var url = "/things?things=".concat(encodeURIComponent(randomThings.join('^')));
-    document.location = url;
-  };
-  var initWot = function initWot() {
+  var initWot = function initWot(things) {
     var portrait = false;
     if (document.querySelector('#wheel-holder')) {
       document.body.classList.add('js');
@@ -221,7 +170,7 @@
         var verticalCentre = boundingEl.offsetHeight / 2;
         var padding = 10;
         var radius = centrePoint - padding;
-        var sectionAngle = 360 / randomThings.length;
+        var sectionAngle = 360 / things.length;
         boundingEl.style.width = "".concat(maxDim, "px");
         boundingEl.style.height = "".concat(maxDim, "px");
         canvas.width = maxDim;
@@ -232,8 +181,8 @@
           buttonsEl.style.flexGrow = 1;
           verticalCentre = boundingEl.offsetHeight / 2;
         }
-        for (var index in randomThings) {
-          if (Object.hasOwn(randomThings, index)) {
+        for (var index in things) {
+          if (Object.hasOwn(things, index)) {
             // draw segments
             index = Number.parseInt(index, 10);
             var angle = index * sectionAngle;
@@ -252,15 +201,15 @@
 
             // render text DIVs
             var textAngle = Number.parseInt(-angle - sectionAngle / 2, 10);
-            makeText(index, container, radius, textAngle, padding);
+            makeText(index, things[index], container, radius, textAngle, padding);
           }
         }
         ctx.lineWidth = 2;
         ctx.strokeStyle = 'rgb(0, 0, 0)';
 
         // draw dividing lines
-        for (var _index in randomThings) {
-          if (Object.hasOwn(randomThings, _index)) {
+        for (var _index in things) {
+          if (Object.hasOwn(things, _index)) {
             var _angle = _index * sectionAngle;
             var _lineX = radius * cosDeg(_angle);
             var _lineY = radius * sinDeg(_angle);
@@ -296,28 +245,79 @@
       }
     }
   };
+
+  /*
+
+  TODO:
+  * split this up into modules
+  * separate JS bundle for wheel page and form page
+  * some kind of clever font sizing for mobile/portrait layout
+  * examples button (inline modal?) on wheel page
+
+  */
+
+  var currentThings;
+  var gamesThings = ['Munchkin', 'Escape the Dark Castle', 'Unearth', 'Star Fluxx', 'Martian Fluxx', 'Doomlings', 'Dragonwood', 'Dragonrealm', 'Forbidden Island', 'Forbidden Desert', 'Forbidden Sky', 'Labyrinth', 'Boss Monster', 'Boss Monster: The Next Level', 'Selfish: Zombie Edition', 'Selfish: Space Edition'];
+  var defaultThings = [['Pizza', 'Burger', 'Thai', 'Fryup', 'Indian', 'Chinese', 'Sushi', 'Pasta', 'Tex-Mex']
+  // ['Horror', 'Comedy', 'Action', 'Drama', 'Sci-Fi', 'Documentary', 'Thriller'],
+  // ['Iron Man', 'Captain America', 'The Hulk', 'Thor', 'Ant-Man', 'Doctor Strange', 'Spider-Man', 'Black Panther', 'Captain Marvel', 'Scarlet Witch', 'Black Widow', 'Hawkeye', 'Vision'],
+  // ['Star Wars', 'Star Trek', 'Harry Potter', 'Lord of the Rings', 'The Avengers', 'Batman', 'James Bond'],
+  ];
+
+  var pickDefaultThings = function pickDefaultThings() {
+    return defaultThings[Math.floor(Math.random() * defaultThings.length)];
+  };
+  var resetOptionClasses = function resetOptionClasses() {
+    var options = document.querySelectorAll('.option');
+    var _iterator = _createForOfIteratorHelper(options),
+      _step;
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var optionItem = _step.value;
+        optionItem.classList.remove('loser');
+        optionItem.classList.remove('throbber');
+        optionItem.classList.remove('winner');
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+  };
+  var start = function start() {
+    var el = document.querySelector('article');
+    el.style.transform = "perspective(none) rotate(0deg)";
+    el.classList.add('spinning');
+    resetOptionClasses();
+    document.querySelector('#start').classList.add('hide');
+    document.querySelector('#stop').classList.remove('hide');
+  };
+  var changeThings = function changeThings() {
+    var url = "/things?things=".concat(encodeURIComponent(currentThings.join('^')));
+    document.location = url;
+  };
   var highlightWinner = function highlightWinner() {
     var losers = document.querySelectorAll('.option');
     var winner = document.querySelector('.winner');
-    var _iterator3 = _createForOfIteratorHelper(losers),
-      _step3;
+    var _iterator2 = _createForOfIteratorHelper(losers),
+      _step2;
     try {
-      for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-        var loser = _step3.value;
+      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+        var loser = _step2.value;
         loser.classList.add('loser');
       }
     } catch (err) {
-      _iterator3.e(err);
+      _iterator2.e(err);
     } finally {
-      _iterator3.f();
+      _iterator2.f();
     }
     winner.classList.remove('loser');
     winner.classList.add('throbber');
   };
   var getTarget = function getTarget(forceTarget) {
-    var targetThingIndex = forceTarget || Math.floor(Math.random() * randomThings.length);
+    var targetThingIndex = forceTarget || Math.floor(Math.random() * currentThings.length);
     document.querySelector("#option".concat(targetThingIndex)).classList.add('winner');
-    var sectionAngle = 360 / randomThings.length;
+    var sectionAngle = 360 / currentThings.length;
     var targetRotation = Math.round(targetThingIndex * sectionAngle + sectionAngle / 2);
     var extraSpins = 3;
     return targetRotation + extraSpins * 360;
@@ -370,160 +370,18 @@
       }
     }
   };
-  var initForm = function initForm() {
-    var urlThings = getThingsFromURL();
-    if (urlThings && urlThings.length >= 2) {
-      // remove all things
-      var allThings = document.querySelector('.all-things');
-      var theThings = allThings.querySelectorAll('.thing-entry');
-      var _iterator4 = _createForOfIteratorHelper(theThings),
-        _step4;
-      try {
-        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-          var thisThing = _step4.value;
-          thisThing.parentNode.removeChild(thisThing);
-        }
-      } catch (err) {
-        _iterator4.e(err);
-      } finally {
-        _iterator4.f();
-      }
-      var _iterator5 = _createForOfIteratorHelper(urlThings),
-        _step5;
-      try {
-        for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
-          var urlThing = _step5.value;
-          addThing(urlThing);
-        }
-      } catch (err) {
-        _iterator5.e(err);
-      } finally {
-        _iterator5.f();
-      }
-    }
-  };
-  var submitThings = function submitThings() {
-    var formValid = true;
-    var thingEntries = document.querySelectorAll('.thing-entry input');
-    var values = [];
-    var _iterator6 = _createForOfIteratorHelper(thingEntries),
-      _step6;
-    try {
-      for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
-        var thingEntry = _step6.value;
-        if (thingEntry.value.length > 0) {
-          thingEntry.classList.remove('invalid');
-          values.push(encodeURIComponent(thingEntry.value));
-        } else {
-          thingEntry.classList.add('invalid');
-          formValid = false;
-        }
-      }
-    } catch (err) {
-      _iterator6.e(err);
-    } finally {
-      _iterator6.f();
-    }
-    if (formValid) {
-      document.location.href = "/?things=".concat(encodeURIComponent(values.join('^')));
-    } else {
-      console.log('some things are empty');
-    }
-  };
-  var addThing = function addThing(thingValue) {
-    var allThings = document.querySelector('.all-things');
-    var theThings = allThings.querySelectorAll('.thing-entry');
-    var currentNumberOfThings = theThings.length;
-    if (currentNumberOfThings < maxThings) {
-      // add thing
-      var newThingDiv = document.createElement('div');
-      var newThingLabel = document.createElement('label');
-      var newThingInput = document.createElement('input');
-      var newThingRemoveButton = document.createElement('button');
-      var newThingValue = thingValue || "Thing ".concat(currentNumberOfThings + 1);
-      newThingDiv.classList.add('thing-entry');
-      newThingLabel.setAttribute('for', "thing".concat(currentNumberOfThings + 1));
-      newThingLabel.innerHTML = "Thing ".concat(currentNumberOfThings + 1);
-      newThingInput.classList.add('thing-value');
-      newThingInput.setAttribute('type', 'text');
-      newThingInput.setAttribute('maxlength', 30);
-      newThingInput.setAttribute('name', "thing".concat(currentNumberOfThings + 1));
-      newThingInput.id = "thing".concat(currentNumberOfThings + 1);
-      newThingInput.value = newThingValue;
-      newThingRemoveButton.setAttribute('tabindex', '-1');
-      newThingRemoveButton.classList.add('removeThing');
-      newThingRemoveButton.classList.add('form-button');
-      newThingRemoveButton.innerHTML = 'Remove this thing';
-      newThingDiv.append(newThingLabel);
-      newThingDiv.append(newThingInput);
-      newThingDiv.append(newThingRemoveButton);
-      allThings.append(newThingDiv);
-    } else {
-      // can't add thing
-      console.log("couldn't add thing");
-    }
-  };
-  var renumberThings = function renumberThings() {
-    var allThings = document.querySelector('.all-things');
-    var theThings = allThings.querySelectorAll('.thing-entry');
-    var currentNumberOfThings = theThings.length;
-    for (var index = 0; index < currentNumberOfThings; index++) {
-      var theThing = theThings[index];
-      var theThingLabel = theThing.querySelector('label');
-      var theThingInput = theThing.querySelector('input');
-      theThingLabel.setAttribute('for', "thing".concat(index + 1));
-      theThingLabel.innerHTML = "Thing ".concat(index + 1);
-      theThingInput.setAttribute('name', "thing".concat(index + 1));
-      theThingInput.id = "thing".concat(index + 1);
-    }
-  };
-  var removeThing = function removeThing(thingButton) {
-    var allThings = document.querySelector('.all-things');
-    var theThings = allThings.querySelectorAll('.thing-entry');
-    var currentNumberOfThings = theThings.length;
-    if (currentNumberOfThings > minThings) {
-      var thingEntry = thingButton.parentNode;
-      thingEntry.parentNode.removeChild(thingEntry);
-      renumberThings();
-    } else {
-      // can't remove thing
-      console.log("couldn't remove thing");
-    }
-  };
-  var resetThings = function resetThings() {
-    var allThings = document.querySelector('.all-things');
-    var theThings = allThings.querySelectorAll('.thing-entry');
-    var _iterator7 = _createForOfIteratorHelper(theThings),
-      _step7;
-    try {
-      for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
-        var thisThing = _step7.value;
-        thisThing.parentNode.removeChild(thisThing);
-      }
-    } catch (err) {
-      _iterator7.e(err);
-    } finally {
-      _iterator7.f();
-    }
-    var x = 0;
-    while (x < 3) {
-      addThing();
-      x++;
-    }
-  };
-  var checkInput = function checkInput(event) {
-    var inputEl = event.target;
-    var inputValue = inputEl.value;
-    var matcher = /\^/g;
-    if (matcher.test(inputValue)) {
-      inputEl.value = inputValue.replaceAll('^', '');
-    }
-  };
 
   // events
   if (document.querySelector('#wheel-holder')) {
-    window.addEventListener('load', initWot);
-    window.addEventListener('resize', initWot);
+    var providedThings = getThingsFromURL();
+    var things = providedThings ? providedThings : pickDefaultThings();
+    currentThings = shuffle(things);
+    window.addEventListener('load', function () {
+      initWot(currentThings);
+    });
+    window.addEventListener('resize', function () {
+      initWot(currentThings);
+    });
     window.addEventListener('keydown', function (e) {
       if (e.key === ' ') {
         toggle();
@@ -546,50 +404,5 @@
       changeThings();
     });
   }
-  if (document.querySelector('#enter-things')) {
-    window.addEventListener('load', initForm);
-    document.querySelector('#go').addEventListener('click', function (event) {
-      event.preventDefault();
-      submitThings();
-    });
-    document.querySelector('#cancel').addEventListener('click', function (event) {
-      event.preventDefault();
-      window.history.go(-1);
-    });
-    document.querySelector('#addThing').addEventListener('click', function (event) {
-      event.preventDefault();
-      addThing();
-    });
-    document.querySelector('#resetThings').addEventListener('click', function (event) {
-      event.preventDefault();
-      resetThings();
-    });
-    document.addEventListener('click', function (event) {
-      if (event.target.classList.contains('removeThing')) {
-        event.preventDefault();
-        removeThing(event.target);
-      }
-    });
-    document.addEventListener('keypress', function (event) {
-      if (event.target.classList.contains('thing-value')) {
-        window.setTimeout(function () {
-          checkInput(event);
-        }, 100);
-      }
-    });
-    document.addEventListener('paste', function (event) {
-      if (event.target.classList.contains('thing-value')) {
-        window.setTimeout(function () {
-          checkInput(event);
-        }, 100);
-      }
-    });
-  }
-  document.addEventListener('click', function (event) {
-    if (event.target.classList.contains('back-link')) {
-      event.preventDefault();
-      window.history.back();
-    }
-  });
 
 })();
