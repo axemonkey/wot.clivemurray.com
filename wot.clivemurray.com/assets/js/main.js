@@ -1,3 +1,13 @@
+/*
+
+TODO:
+* split this up into modules
+* separate JS bundle for wheel page and form page
+* some kind of clever font sizing for mobile/portrait layout
+* examples button (inline modal?) on wheel page
+
+*/
+
 const minThings = 2;
 const maxThings = 20;
 
@@ -10,9 +20,9 @@ const gamesThings = [
 	'Doomlings',
 	'Dragonwood',
 	'Dragonrealm',
-	'Forgotten Island',
-	'Forgotten Desert',
-	'Forgotten Sky',
+	'Forbidden Island',
+	'Forbidden Desert',
+	'Forbidden Sky',
 	'Labyrinth',
 	'Boss Monster',
 	'Boss Monster: The Next Level',
@@ -259,8 +269,6 @@ const getTarget = forceTarget => {
 	document.querySelector(`#option${targetThingIndex}`).classList.add('winner');
 	const sectionAngle = 360 / randomThings.length;
 	const targetRotation = Math.round((targetThingIndex * sectionAngle) + (sectionAngle / 2));
-	// console.log(`target item: ${randomThings[targetThingIndex]}`);
-	// console.log(`targetRotation: ${targetRotation}`);
 	const extraSpins = 3;
 	return targetRotation + (extraSpins * 360);
 };
@@ -283,7 +291,6 @@ const stop = forceTarget => {
 		el.classList.add('stopping');
 		el.style.transform = `perspective(none) rotate(${currentRotation}deg)`;
 		const targetRotation = getTarget(forceTarget);
-		// console.log(`targetRotation: ${targetRotation}`);
 
 		const spinToStop = [
 			{

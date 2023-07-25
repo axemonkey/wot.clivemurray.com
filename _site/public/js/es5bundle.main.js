@@ -66,9 +66,19 @@
     };
   }
 
+  /*
+
+  TODO:
+  * split this up into modules
+  * separate JS bundle for wheel page and form page
+  * some kind of clever font sizing for mobile/portrait layout
+  * examples button (inline modal?) on wheel page
+
+  */
+
   var minThings = 2;
   var maxThings = 20;
-  var gamesThings = ['Munchkin', 'Escape the Dark Castle', 'Unearth', 'Star Fluxx', 'Martian Fluxx', 'Doomlings', 'Dragonwood', 'Dragonrealm', 'Forgotten Island', 'Forgotten Desert', 'Forgotten Sky', 'Labyrinth', 'Boss Monster', 'Boss Monster: The Next Level', 'Selfish: Zombie Edition', 'Selfish: Space Edition'];
+  var gamesThings = ['Munchkin', 'Escape the Dark Castle', 'Unearth', 'Star Fluxx', 'Martian Fluxx', 'Doomlings', 'Dragonwood', 'Dragonrealm', 'Forbidden Island', 'Forbidden Desert', 'Forbidden Sky', 'Labyrinth', 'Boss Monster', 'Boss Monster: The Next Level', 'Selfish: Zombie Edition', 'Selfish: Space Edition'];
   var defaultThings = [['Pizza', 'Burger', 'Thai', 'Fryup', 'Indian', 'Chinese', 'Sushi', 'Pasta', 'Tex-Mex']
   // ['Horror', 'Comedy', 'Action', 'Drama', 'Sci-Fi', 'Documentary', 'Thriller'],
   // ['Iron Man', 'Captain America', 'The Hulk', 'Thor', 'Ant-Man', 'Doctor Strange', 'Spider-Man', 'Black Panther', 'Captain Marvel', 'Scarlet Witch', 'Black Widow', 'Hawkeye', 'Vision'],
@@ -309,8 +319,6 @@
     document.querySelector("#option".concat(targetThingIndex)).classList.add('winner');
     var sectionAngle = 360 / randomThings.length;
     var targetRotation = Math.round(targetThingIndex * sectionAngle + sectionAngle / 2);
-    // console.log(`target item: ${randomThings[targetThingIndex]}`);
-    // console.log(`targetRotation: ${targetRotation}`);
     var extraSpins = 3;
     return targetRotation + extraSpins * 360;
   };
@@ -331,8 +339,6 @@
       el.classList.add('stopping');
       el.style.transform = "perspective(none) rotate(".concat(currentRotation, "deg)");
       var targetRotation = getTarget(forceTarget);
-      // console.log(`targetRotation: ${targetRotation}`);
-
       var spinToStop = [{
         transform: "perspective(none) rotate(".concat(currentRotation, "deg)")
       }, {
