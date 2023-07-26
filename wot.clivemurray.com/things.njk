@@ -1,5 +1,5 @@
 ---
-layout: main.hbs
+layout: main.njk
 title: Change Things // The Wheel of Things
 permalink: things.html
 script: edit
@@ -19,11 +19,11 @@ script: edit
 			<fieldset>
 				<div class="all-things">
 					{% for index in range(1, 4) %}
-					<div class="thing-entry">
-						<label for="thing{{ index }}">Thing {{ index }}</label>
-						<input class="thing-value" type="text" name="thing{{ index }}" id="thing{{ index }}" value="Thing {{ index }}" maxlength="30" required>
-						<button class="removeThing form-button" tabindex="-1">Remove this thing</button>
-					</div>
+						<div class="thing-entry">
+							<label for="thing{{ index }}">Thing {{ index }}</label>
+							<input class="thing-value" type="text" name="thing{{ index }}" id="thing{{ index }}" value="Thing {{ index }}" maxlength="30" required>
+							<button class="removeThing form-button" tabindex="-1">Remove this thing</button>
+						</div>
 					{% endfor %}
 				</div>
 				<div class="add-row">
