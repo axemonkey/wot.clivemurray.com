@@ -4,8 +4,6 @@ import {initWot} from './modules/wheel.js';
 /*
 
 TODO:
-* split this up into modules
-* separate JS bundle for wheel page and form page
 * some kind of clever font sizing for mobile/portrait layout
 * examples button (inline modal?) on wheel page
 

@@ -334,13 +334,15 @@ fieldset,
 
 .top-link a,
 .support a,
-.copy-panel a {
+.copy-panel a,
+.examples a {
 	color: #eee;
 }
 
 .top-link a:hover,
 .support a:hover,
-.copy-panel a:hover {
+.copy-panel a:hover,
+.examples a:hover {
 	color: #fff;
 }
 
@@ -356,4 +358,14 @@ ul li {
 	&:last-child {
 		margin-bottom: 0;
 	}
+}
+
+.examples {
+	position: absolute;
+	left: 1em;
+	top: 1em;
+}
+
+.examples summary {
+	cursor: pointer;
 }
