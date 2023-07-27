@@ -335,14 +335,16 @@ fieldset,
 .top-link a,
 .support a,
 .copy-panel a,
-.examples a {
+.examples a,
+.drm-notice a {
 	color: #eee;
 }
 
 .top-link a:hover,
 .support a:hover,
 .copy-panel a:hover,
-.examples a:hover {
+.examples a:hover,
+.drm-notice a:hover {
 	color: #fff;
 }
 
@@ -368,4 +370,24 @@ ul li {
 
 .examples summary {
 	cursor: pointer;
+}
+
+.drm-notice {
+	max-width: 600px;
+
+	h1 {
+		font-size: 3em;
+		margin-bottom: 1em;
+	}
+
+	p,
+	li {
+		font-size: 1.4em;
+		margin-top: 0;
+		margin-bottom: 1em;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
 }

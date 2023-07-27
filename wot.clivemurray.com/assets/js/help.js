@@ -1,6 +1,17 @@
-document.addEventListener('click', event => {
-	if (event.target.classList.contains('back-link')) {
-		event.preventDefault();
-		window.history.back();
+import {checkWEI} from './modules/tools.js';
+
+const initPage = () => {
+	document.addEventListener('click', event => {
+		if (event.target.classList.contains('back-link')) {
+			event.preventDefault();
+			window.history.back();
+		}
+	});
+};
+
+window.addEventListener('load', () => {
+	if (checkWEI()) {
+		return;
 	}
+	initPage();
 });

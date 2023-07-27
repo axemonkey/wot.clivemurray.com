@@ -25,3 +25,4 @@ rules:
     scss/dollar-variable-pattern: null
     scss/at-mixin-pattern: null
     font-family-name-quotes: "always-where-recommended"
+    no-descending-specificity: null

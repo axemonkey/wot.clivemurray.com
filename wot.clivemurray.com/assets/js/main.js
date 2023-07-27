@@ -1,4 +1,4 @@
-import {getThingsFromURL, shuffle} from './modules/tools.js';
+import {getThingsFromURL, shuffle, checkWEI} from './modules/tools.js';
 import {initWot} from './modules/wheel.js';
 
 /*
@@ -148,11 +148,16 @@ if (document.querySelector('#wheel-holder')) {
 	currentThings = shuffle(things);
 
 	window.addEventListener('load', () => {
+		if (checkWEI()) {
+			return;
+		}
 		initWot(currentThings);
 	});
+
 	window.addEventListener('resize', () => {
 		initWot(currentThings);
 	});
+
 	window.addEventListener('keydown', e => {
 		if (e.key === ' ') {
 			toggle();
