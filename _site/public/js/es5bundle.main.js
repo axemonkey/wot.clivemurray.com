@@ -259,13 +259,21 @@
   /*
 
   TODO:
+
+  * store lists of Things in data files (JSON)
+    * the front-end JS for the wheel can read from JSON files
+    * 11ty can read JSON data into the NJK templates
+  * alphabetise the entries on the form
+  * work out why the footer is too high when the page is long
+  * maybe use CSS grid on the form page? or even a table?
+  * the text items are in a weird alignment when there are 17 Things, but not 15
   * some kind of clever font sizing for mobile/portrait layout
   * examples button (inline modal?) on wheel page
 
   */
 
   var currentThings;
-  var gamesThings = ['Munchkin', 'Escape the Dark Castle', 'Unearth', 'Star Fluxx', 'Martian Fluxx', 'Doomlings', 'Dragonwood', 'Dragonrealm', 'Forbidden Island', 'Forbidden Desert', 'Forbidden Sky', 'Labyrinth', 'Boss Monster', 'Boss Monster: The Next Level', 'Selfish: Zombie Edition', 'Selfish: Space Edition'];
+  var gamesThings = ['Munchkin', 'Escape the Dark Castle', 'Unearth', 'Star Fluxx', 'Martian Fluxx', 'Doomlings', 'Dragonwood', 'Dragonrealm', 'Forbidden Island', 'Forbidden Desert', 'Forbidden Sky', 'Labyrinth', 'Boss Monster', 'Boss Monster: The Next Level', 'Selfish: Zombie Edition', 'Selfish: Space Edition', 'Bag of Dungeon'];
   var defaultThings = [['Pizza', 'Burger', 'Thai', 'Fryup', 'Indian', 'Chinese', 'Sushi', 'Pasta', 'Tex-Mex']
   // ['Horror', 'Comedy', 'Action', 'Drama', 'Sci-Fi', 'Documentary', 'Thriller'],
   // ['Iron Man', 'Captain America', 'The Hulk', 'Thor', 'Ant-Man', 'Doctor Strange', 'Spider-Man', 'Black Panther', 'Captain Marvel', 'Scarlet Witch', 'Black Widow', 'Hawkeye', 'Vision'],

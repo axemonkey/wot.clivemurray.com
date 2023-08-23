@@ -4,6 +4,14 @@ import {initWot} from './modules/wheel.js';
 /*
 
 TODO:
+
+* store lists of Things in data files (JSON)
+  * the front-end JS for the wheel can read from JSON files
+  * 11ty can read JSON data into the NJK templates
+* alphabetise the entries on the form
+* work out why the footer is too high when the page is long
+* maybe use CSS grid on the form page? or even a table?
+* the text items are in a weird alignment when there are 17 Things, but not 15
 * some kind of clever font sizing for mobile/portrait layout
 * examples button (inline modal?) on wheel page
 
@@ -28,6 +36,7 @@ const gamesThings = [
 	'Boss Monster: The Next Level',
 	'Selfish: Zombie Edition',
 	'Selfish: Space Edition',
+	'Bag of Dungeon',
 ];
 
 const defaultThings = [
