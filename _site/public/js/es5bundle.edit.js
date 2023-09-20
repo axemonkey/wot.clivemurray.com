@@ -106,6 +106,7 @@
       } finally {
         _iterator.f();
       }
+      urlThings.sort();
       var _iterator2 = _createForOfIteratorHelper(urlThings),
         _step2;
       try {

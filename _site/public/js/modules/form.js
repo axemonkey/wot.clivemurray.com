@@ -13,6 +13,8 @@ const initForm = () => {
 			thisThing.parentNode.removeChild(thisThing);
 		}
 
+		urlThings.sort();
+
 		for (const urlThing of urlThings) {
 			addThing(urlThing);
 		}
