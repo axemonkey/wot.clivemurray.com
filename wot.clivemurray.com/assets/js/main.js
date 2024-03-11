@@ -1,5 +1,6 @@
 import {getThingsFromURL, shuffle, checkWEI} from './modules/tools.js';
 import {initWot} from './modules/wheel.js';
+import {lapBanner} from './modules/lap-banner.js';
 
 /*
 
@@ -161,6 +162,7 @@ if (document.querySelector('#wheel-holder')) {
 			return;
 		}
 		initWot(currentThings);
+		lapBanner.init();
 	});
 
 	window.addEventListener('resize', () => {
