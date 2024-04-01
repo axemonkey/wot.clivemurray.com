@@ -48,9 +48,6 @@ const allGamesThings = [
 	'Unstable Unicorns',
 ];
 
-const shuffledGamesThings = allGamesThings.sort(() => 0.5 - Math.random());
-const gamesThings = shuffledGamesThings.slice(0, numberOfGamesThingsToPick);
-
 const defaultThings = [
 	['Pizza', 'Burger', 'Thai', 'Fryup', 'Indian', 'Chinese', 'Sushi', 'Pasta', 'Tex-Mex'],
 	// ['Horror', 'Comedy', 'Action', 'Drama', 'Sci-Fi', 'Documentary', 'Thriller'],
@@ -186,6 +183,8 @@ if (document.querySelector('#wheel-holder')) {
 		}
 
 		if (e.key === '0') {
+			const shuffledGamesThings = allGamesThings.sort(() => 0.5 - Math.random());
+			const gamesThings = shuffledGamesThings.slice(0, numberOfGamesThingsToPick);
 			const url = `/?things=${encodeURIComponent(gamesThings.join('^'))}`;
 			document.location = url;
 		}
