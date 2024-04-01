@@ -282,18 +282,18 @@
 
 	TODO:
 
+	* use CSS grid on the form page
 	* store lists of Things in data files (JSON)
 	  * the front-end JS for the wheel can read from JSON files
 	  * 11ty can read JSON data into the NJK templates
 	* work out why the footer is too high when the page is long
-	* maybe use CSS grid on the form page? or even a table?
 	* the text items are in a weird alignment when there are 17 Things, but not 15
 	* some kind of clever font sizing for mobile/portrait layout
 
 	*/
 
 	let currentThings;
-	const numberOfGamesThingsToPick = 10;
+	const numberOfGamesThingsToPick = 13;
 	const allGamesThings = ['Bag of Dungeon', 'Boss Monster', 'Boss Monster: The Next Level', 'Cluedo', 'Doomlings', 'Dragonrealm', 'Dragonwood', 'Escape the Dark Castle', 'Escape the Dark Sector', 'Exploding Kittens', 'Forbidden Desert', 'Forbidden Island', 'Forbidden Jungle', 'Forbidden Sky', 'Grimwood', 'Gubs', 'Labyrinth', 'Martian Fluxx', 'Munchkin', 'Munchkin: Critical Role', 'Selfish: Space Edition', 'Selfish: Zombie Edition', 'Star Fluxx', 'Unearth', 'Unstable Unicorns'];
 	const shuffledGamesThings = allGamesThings.sort(() => 0.5 - Math.random());
 	const gamesThings = shuffledGamesThings.slice(0, numberOfGamesThingsToPick);
