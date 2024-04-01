@@ -293,7 +293,10 @@
 	*/
 
 	let currentThings;
-	const gamesThings = ['Munchkin', 'Escape the Dark Castle', 'Unearth', 'Gubs', 'Star Fluxx', 'Martian Fluxx', 'Doomlings', 'Dragonwood', 'Dragonrealm', 'Forbidden Island', 'Forbidden Desert', 'Forbidden Sky', 'Forbidden Jungle', 'Labyrinth', 'Boss Monster', 'Boss Monster: The Next Level', 'Selfish: Zombie Edition', 'Selfish: Space Edition', 'Bag of Dungeon'];
+	const numberOfGamesThingsToPick = 10;
+	const allGamesThings = ['Bag of Dungeon', 'Boss Monster', 'Boss Monster: The Next Level', 'Cluedo', 'Doomlings', 'Dragonrealm', 'Dragonwood', 'Escape the Dark Castle', 'Escape the Dark Sector', 'Exploding Kittens', 'Forbidden Desert', 'Forbidden Island', 'Forbidden Jungle', 'Forbidden Sky', 'Grimwood', 'Gubs', 'Labyrinth', 'Martian Fluxx', 'Munchkin', 'Munchkin: Critical Role', 'Selfish: Space Edition', 'Selfish: Zombie Edition', 'Star Fluxx', 'Unearth', 'Unstable Unicorns'];
+	const shuffledGamesThings = allGamesThings.sort(() => 0.5 - Math.random());
+	const gamesThings = shuffledGamesThings.slice(0, numberOfGamesThingsToPick);
 	const defaultThings = [['Pizza', 'Burger', 'Thai', 'Fryup', 'Indian', 'Chinese', 'Sushi', 'Pasta', 'Tex-Mex']
 	// ['Horror', 'Comedy', 'Action', 'Drama', 'Sci-Fi', 'Documentary', 'Thriller'],
 	// ['Iron Man', 'Captain America', 'The Hulk', 'Thor', 'Ant-Man', 'Doctor Strange', 'Spider-Man', 'Black Panther', 'Captain Marvel', 'Scarlet Witch', 'Black Widow', 'Hawkeye', 'Vision'],
