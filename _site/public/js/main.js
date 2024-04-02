@@ -38,6 +38,7 @@ const allGamesThings = [
 	'Forbidden Sky',
 	'Grimwood',
 	'Gubs',
+	'Here to Slay',
 	'Labyrinth',
 	'Martian Fluxx',
 	'Munchkin',
