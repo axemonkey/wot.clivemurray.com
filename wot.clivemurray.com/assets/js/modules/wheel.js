@@ -28,6 +28,14 @@ const setupMain = () => {
 	for (const button of buttons) {
 		button.classList.add('yay');
 	}
+
+	const backLink = document.querySelector('.back-link');
+	if (backLink) {
+		backLink.addEventListener('click', event => {
+			event.preventDefault();
+			history.back();
+		});
+	}
 };
 
 const initWot = things => {

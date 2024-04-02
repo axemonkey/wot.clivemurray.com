@@ -19,7 +19,7 @@ TODO:
 
 let currentThings;
 
-const numberOfGamesThingsToPick = 13;
+const numberOfGamesThingsToPick = 12;
 
 const allGamesThings = [
 	'Bag of Dungeon',
@@ -123,6 +123,8 @@ const stop = forceTarget => {
 		el.style.transform = `perspective(none) rotate(${currentRotation}deg)`;
 		const targetRotation = getTarget(forceTarget);
 
+		const spindownDuration = 3000;
+
 		const spinToStop = [
 			{
 				transform: `perspective(none) rotate(${currentRotation}deg)`,
@@ -133,7 +135,7 @@ const stop = forceTarget => {
 		];
 
 		const spinToStopTiming = {
-			duration: 3000,
+			duration: spindownDuration,
 			iterations: 1,
 			easing: 'ease-out',
 		};
@@ -146,7 +148,7 @@ const stop = forceTarget => {
 			document.querySelector('#start').classList.remove('hide');
 			document.querySelector('#stop').classList.add('hide');
 			document.querySelector('#stop').classList.add('yay');
-		}, 3000);
+		}, spindownDuration);
 	}
 };
 
@@ -172,6 +174,7 @@ if (document.querySelector('#wheel-holder')) {
 			return;
 		}
 		initWot(currentThings);
+		console.log(`${currentThings.length} things on the wheel`);
 		lapBanner.init();
 	});
 
@@ -185,8 +188,9 @@ if (document.querySelector('#wheel-holder')) {
 		}
 
 		if (e.key === '0') {
+			const howMany = (e.ctrlKey ? allGamesThings.length : numberOfGamesThingsToPick);
 			const shuffledGamesThings = allGamesThings.sort(() => 0.5 - Math.random());
-			const gamesThings = shuffledGamesThings.slice(0, numberOfGamesThingsToPick);
+			const gamesThings = shuffledGamesThings.slice(0, howMany);
 			const url = `/?things=${encodeURIComponent(gamesThings.join('^'))}`;
 			document.location = url;
 		}
