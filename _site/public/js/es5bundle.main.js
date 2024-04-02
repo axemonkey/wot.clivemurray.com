@@ -85,18 +85,12 @@
 	  for (const button of buttons) {
 	    button.classList.add('yay');
 	  }
-	  const backLink = document.querySelector('.back-link');
-	  if (backLink) {
-	    backLink.addEventListener('click', event => {
-	      event.preventDefault();
-	      history.back();
-	    });
-	  }
 	};
 	const initWot = things => {
 	  let portrait = false;
 	  if (document.querySelector('#wheel-holder')) {
 	    document.body.classList.add('js');
+	    document.body.classList.add('wheelpage');
 	    if (document.body.offsetHeight > document.body.offsetWidth) {
 	      document.body.classList.add('portrait');
 	      portrait = true;
@@ -354,7 +348,7 @@
 	  const el = document.querySelector('article');
 	  const currStyle = window.getComputedStyle(el);
 	  const currTrans = currStyle.getPropertyValue('transform');
-	  const values = currTrans.split('(')[1].split(')')[0].split('^');
+	  const values = currTrans.split('(')[1].split(')')[0].split(',');
 	  const currAngle = Math.round(Math.atan2(values[1], values[0]) * (180 / Math.PI));
 	  return currAngle > 0 ? currAngle : currAngle + 360;
 	};

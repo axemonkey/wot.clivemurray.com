@@ -64,9 +64,6 @@ body {
 
 body {
 	color: #fff;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }
 
 .hide {
@@ -74,8 +71,6 @@ body {
 }
 
 #wrapper {
-	width: 100vw;
-	height: 100vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -242,6 +237,8 @@ fieldset,
 .thing-entry label {
 	font-size: 1.5em;
 	font-family: $itemFont;
+	min-width: 100px;
+	text-align: right;
 }
 
 .thing-entry input {
@@ -307,13 +304,29 @@ fieldset,
 }
 
 .support {
-	position: absolute;
-	right: 1em;
-	bottom: 1em;
-
 	p {
 		text-align: right;
 		margin: 0 0 5px;
+	}
+}
+
+body.wheelpage {
+	height: 100vh;
+	height: 100svh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	#wrapper {
+		height: 100vh;
+		height: 100svh;
+		width: 100vw;
+	}
+
+	.support {
+		position: absolute;
+		right: 1em;
+		bottom: 1em;
 	}
 }
 

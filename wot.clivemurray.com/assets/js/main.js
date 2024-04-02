@@ -108,7 +108,7 @@ const getCurrentRotation = () => {
 	const el = document.querySelector('article');
 	const currStyle = window.getComputedStyle(el);
 	const currTrans = currStyle.getPropertyValue('transform');
-	const values = currTrans.split('(')[1].split(')')[0].split('^');
+	const values = currTrans.split('(')[1].split(')')[0].split(',');
 	const currAngle = Math.round(Math.atan2(values[1], values[0]) * (180 / Math.PI));
 	return (currAngle > 0 ? currAngle : currAngle + 360);
 };

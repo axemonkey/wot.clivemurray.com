@@ -28,20 +28,13 @@ const setupMain = () => {
 	for (const button of buttons) {
 		button.classList.add('yay');
 	}
-
-	const backLink = document.querySelector('.back-link');
-	if (backLink) {
-		backLink.addEventListener('click', event => {
-			event.preventDefault();
-			history.back();
-		});
-	}
 };
 
 const initWot = things => {
 	let portrait = false;
 	if (document.querySelector('#wheel-holder')) {
 		document.body.classList.add('js');
+		document.body.classList.add('wheelpage');
 		if (document.body.offsetHeight > document.body.offsetWidth) {
 			document.body.classList.add('portrait');
 			portrait = true;
