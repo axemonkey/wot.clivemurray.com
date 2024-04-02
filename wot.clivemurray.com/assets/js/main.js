@@ -122,20 +122,20 @@ const stop = forceTarget => {
 		el.classList.add('stopping');
 		el.style.transform = `perspective(none) rotate(${currentRotation}deg)`;
 		const targetRotation = getTarget(forceTarget);
-
-		const spindownDuration = 3000;
+		const extraSpins = Math.round(Math.random() * 5);
+		const spindownDurationSeconds = 3 + (extraSpins / 2);
 
 		const spinToStop = [
 			{
 				transform: `perspective(none) rotate(${currentRotation}deg)`,
 			},
 			{
-				transform: `perspective(none) rotate(${targetRotation}deg)`,
+				transform: `perspective(none) rotate(${targetRotation + (360 * extraSpins)}deg)`,
 			},
 		];
 
 		const spinToStopTiming = {
-			duration: spindownDuration,
+			duration: spindownDurationSeconds * 1000,
 			iterations: 1,
 			easing: 'ease-out',
 		};
@@ -148,7 +148,7 @@ const stop = forceTarget => {
 			document.querySelector('#start').classList.remove('hide');
 			document.querySelector('#stop').classList.add('hide');
 			document.querySelector('#stop').classList.add('yay');
-		}, spindownDuration);
+		}, spindownDurationSeconds * 1000);
 	}
 };
 
