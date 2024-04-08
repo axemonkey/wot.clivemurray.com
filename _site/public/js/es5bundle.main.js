@@ -285,6 +285,7 @@
 	TODO:
 
 	* use CSS grid on the form page
+	* maybe improve the colour selection process
 	* add a modifier key to 0 which loads ALL games things
 	* store lists of Things in data files (JSON)
 	  * the front-end JS for the wheel can read from JSON files
