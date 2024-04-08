@@ -43,6 +43,7 @@ const allGamesThings = [
 	'Martian Fluxx',
 	'Munchkin',
 	'Munchkin: Critical Role',
+	'Munchkin: Marvel',
 	'Selfish: Space Edition',
 	'Selfish: Zombie Edition',
 	'Star Fluxx',
