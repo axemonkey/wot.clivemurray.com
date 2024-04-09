@@ -50,14 +50,11 @@
 	  return Math.sin(degToRad(Number.parseInt(angle, 10)));
 	};
 
-	const getRandColourValue = () => {
-	  return (Math.floor(Math.random() * 6) + 4) * 20;
-	};
-	const getRandRGB = () => {
-	  const r = getRandColourValue();
-	  const g = getRandColourValue();
-	  const b = getRandColourValue();
-	  return `${r}, ${g}, ${b}`;
+	const allColours = ['AliceBlue', 'AntiqueWhite', 'Aqua', 'Aquamarine', 'Azure', 'Beige', 'Bisque', 'Black', 'BlanchedAlmond', 'Blue', 'BlueViolet', 'Brown', 'BurlyWood', 'CadetBlue', 'Chocolate', 'Coral', 'CornflowerBlue', 'Cornsilk', 'Crimson', 'Cyan', 'DarkBlue', 'DarkCyan', 'DarkGoldenRod', 'DarkGray', 'DarkGreen', 'DarkKhaki', 'DarkMagenta', 'DarkOliveGreen', 'DarkOrange', 'DarkOrchid', 'DarkRed', 'DarkSalmon', 'DarkSeaGreen', 'DarkSlateBlue', 'DarkSlateGray', 'DarkTurquoise', 'DarkViolet', 'DeepPink', 'DeepSkyBlue', 'DimGray', 'DodgerBlue', 'FireBrick', 'FloralWhite', 'ForestGreen', 'Fuchsia', 'Gainsboro', 'GhostWhite', 'Gold', 'GoldenRod', 'Gray', 'Green', 'GreenYellow', 'HoneyDew', 'HotPink', 'IndianRed', 'Indigo', 'Ivory', 'Khaki', 'Lavender', 'LavenderBlush', 'LawnGreen', 'LemonChiffon', 'LightBlue', 'LightCoral', 'LightCyan', 'LightGoldenRodYellow', 'LightGray', 'LightGreen', 'LightPink', 'LightSalmon', 'LightSeaGreen', 'LightSkyBlue', 'LightSlateGray', 'LightSteelBlue', 'LightYellow', 'Lime', 'LimeGreen', 'Linen', 'Magenta', 'Maroon', 'MediumAquaMarine', 'MediumBlue', 'MediumOrchid', 'MediumPurple', 'MediumSeaGreen', 'MediumSlateBlue', 'MediumSpringGreen', 'MediumTurquoise', 'MediumVioletRed', 'MidnightBlue', 'MintCream', 'MistyRose', 'Moccasin', 'NavajoWhite', 'Navy', 'OldLace', 'Olive', 'OliveDrab', 'Orange', 'OrangeRed', 'Orchid', 'PaleGoldenRod', 'PaleGreen', 'PaleTurquoise', 'PaleVioletRed', 'PapayaWhip', 'PeachPuff', 'Peru', 'Pink', 'Plum', 'PowderBlue', 'Purple', 'Red', 'RosyBrown', 'RoyalBlue', 'SaddleBrown', 'Salmon', 'SandyBrown', 'SeaGreen', 'SeaShell', 'Sienna', 'Silver', 'SkyBlue', 'SlateBlue', 'SlateGray', 'Snow', 'SpringGreen', 'SteelBlue', 'Tan', 'Teal', 'Thistle', 'Tomato', 'Turquoise', 'Violet', 'Wheat', 'White', 'WhiteSmoke', 'Yellow', 'YellowGreen'];
+	const getColours = numberOfColours => {
+	  const shuffledColours = allColours.sort(() => 0.5 - Math.random());
+	  const selectedColours = shuffledColours.slice(0, numberOfColours);
+	  return selectedColours;
 	};
 
 	const makeText = (index, text, container, radius, angle, padding) => {
@@ -109,6 +106,7 @@
 	      const padding = 10;
 	      const radius = centrePoint - padding;
 	      const sectionAngle = 360 / things.length;
+	      const wheelColours = getColours(things.length);
 	      boundingEl.style.width = `${maxDim}px`;
 	      boundingEl.style.height = `${maxDim}px`;
 	      canvas.width = maxDim;
@@ -133,7 +131,7 @@
 	          ctx.moveTo(centrePoint, centrePoint);
 	          ctx.lineTo(centrePoint + lineX, centrePoint + lineY);
 	          ctx.arc(centrePoint, centrePoint, radius, angleRad, nextAngleRad, false);
-	          ctx.fillStyle = `rgb(${getRandRGB()})`;
+	          ctx.fillStyle = wheelColours[index];
 	          ctx.fill();
 	          ctx.closePath();
 
@@ -284,15 +282,17 @@
 
 	TODO:
 
-	* use CSS grid on the form page
-	* maybe improve the colour selection process
-	* add a modifier key to 0 which loads ALL games things
 	* store lists of Things in data files (JSON)
-	  * the front-end JS for the wheel can read from JSON files
-	  * 11ty can read JSON data into the NJK templates
-	* work out why the footer is too high when the page is long
+		* the front-end JS for the wheel can read from JSON files
+		* 11ty can read JSON data into the NJK templates
 	* the text items are in a weird alignment when there are 17 Things, but not 15
 	* some kind of clever font sizing for mobile/portrait layout
+
+	TO DONE:
+
+	* add a modifier key to 0 which loads ALL games things
+	* maybe improve the colour selection process
+	* work out why the footer is too high when the page is long
 
 	*/
 

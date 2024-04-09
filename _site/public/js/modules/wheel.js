@@ -1,5 +1,5 @@
 import {degToRad, cosDeg, sinDeg} from './maths.js';
-import {getRandRGB} from './colours.js';
+import {getColours} from './colours.js';
 
 const makeText = (index, text, container, radius, angle, padding) => {
 	const newTextDiv = document.createElement('div');
@@ -54,6 +54,7 @@ const initWot = things => {
 			const padding = 10;
 			const radius = centrePoint - padding;
 			const sectionAngle = 360 / things.length;
+			const wheelColours = getColours(things.length);
 
 			boundingEl.style.width = `${maxDim}px`;
 			boundingEl.style.height = `${maxDim}px`;
@@ -82,7 +83,7 @@ const initWot = things => {
 					ctx.moveTo(centrePoint, centrePoint);
 					ctx.lineTo(centrePoint + lineX, centrePoint + lineY);
 					ctx.arc(centrePoint, centrePoint, radius, angleRad, nextAngleRad, false);
-					ctx.fillStyle = `rgb(${getRandRGB()})`;
+					ctx.fillStyle = wheelColours[index];
 					ctx.fill();
 					ctx.closePath();
 
