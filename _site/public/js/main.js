@@ -50,7 +50,9 @@ const allGamesThings = [
 	'Selfish: Space Edition',
 	'Selfish: Zombie Edition',
 	'Star Fluxx',
+	'Sushi Go',
 	'Unearth',
+	'Uno Flip',
 	'Unstable Unicorns',
 ];
 
