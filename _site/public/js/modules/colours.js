@@ -1,3 +1,6 @@
+import {getNumberFromString} from './tools.js';
+import {OPTIONS} from './settings.js';
+
 const getRandColourValue = () => {
 	return (Math.floor(Math.random() * 6) + 4) * 20;
 };
@@ -152,9 +155,20 @@ const allColours = [
 	'YellowGreen',
 ];
 
-const getColours = numberOfColours => {
-	const shuffledColours = allColours.sort(() => 0.5 - Math.random());
-	const selectedColours = shuffledColours.slice(0, numberOfColours);
+const getColours = things => {
+	const numberOfColours = things.length;
+	let selectedColours = [];
+
+	if (OPTIONS.COLOUR_SELECTION_METHOD === 1) {
+		const shuffledColours = allColours.sort(() => 0.5 - Math.random());
+		selectedColours = shuffledColours.slice(0, numberOfColours);
+	} else if (OPTIONS.COLOUR_SELECTION_METHOD === 2) {
+		for (const thing of things) {
+			const stringValue = getNumberFromString(thing);
+			const stringValueRemainder = stringValue % allColours.length;
+			selectedColours.push(allColours[stringValueRemainder]);
+		}
+	}
 
 	return selectedColours;
 };

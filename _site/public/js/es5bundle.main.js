@@ -28,16 +28,12 @@
 	  }
 	  return result;
 	};
-	const checkWEI = () => {
-	  const DRMHorseshit = navigator.getEnvironmentIntegrity;
-	  // const DRMHorseshit = 'horse';
-	  // console.log(`navigator.getEnvironmentIntegrity: ${DRMHorseshit}`);
-
-	  if (DRMHorseshit !== undefined) {
-	    document.querySelector('body').innerHTML = '<article class="drm-notice"><h1>Your browser contains Google DRM</h1><p>“Web Environment Integrity” is a Google euphemism for a DRM that is designed to prevent ad-blocking. In support of an open web, this website does not function with this DRM. Please install a browser such as <a href="https://mozilla.org/en-US/firefox/new/">Firefox</a> that respects your freedom and supports ad blockers.</p><p>If you would like to know more:</p><ul><li><a href="https://vivaldi.com/blog/googles-new-dangerous-web-environment-integrity-spec/">Vivaldi: Unpacking Google’s new “dangerous” Web-Environment-Integrity specification</a></li><li><a href="https://securityboulevard.com/2023/07/google-wei-drm-adtech-richixbw/">Security Boulevard: Google Wants to DRM your OS for ‘Web Environment Integrity’</a></li><li><a href="https://www.techradar.com/pro/googles-new-plan-for-the-future-of-the-web-has-a-lot-of-people-worried-heres-why">TechRadar: Google\'s new plan for the future of the web has a lot of people worried - here\'s why</a></li></ul></article>';
-	    return true;
+	const getNumberFromString = string => {
+	  let total = 0;
+	  for (let index = 0; index < string.length; index++) {
+	    total += string.charCodeAt(index);
 	  }
-	  return false;
+	  return total;
 	};
 
 	const degToRad = deg => {
@@ -51,16 +47,23 @@
 	};
 
 	const allColours = ['AliceBlue', 'AntiqueWhite', 'Aqua', 'Aquamarine', 'Azure', 'Beige', 'Bisque', 'Black', 'BlanchedAlmond', 'Blue', 'BlueViolet', 'Brown', 'BurlyWood', 'CadetBlue', 'Chocolate', 'Coral', 'CornflowerBlue', 'Cornsilk', 'Crimson', 'Cyan', 'DarkBlue', 'DarkCyan', 'DarkGoldenRod', 'DarkGray', 'DarkGreen', 'DarkKhaki', 'DarkMagenta', 'DarkOliveGreen', 'DarkOrange', 'DarkOrchid', 'DarkRed', 'DarkSalmon', 'DarkSeaGreen', 'DarkSlateBlue', 'DarkSlateGray', 'DarkTurquoise', 'DarkViolet', 'DeepPink', 'DeepSkyBlue', 'DimGray', 'DodgerBlue', 'FireBrick', 'FloralWhite', 'ForestGreen', 'Fuchsia', 'Gainsboro', 'GhostWhite', 'Gold', 'GoldenRod', 'Gray', 'Green', 'GreenYellow', 'HoneyDew', 'HotPink', 'IndianRed', 'Indigo', 'Ivory', 'Khaki', 'Lavender', 'LavenderBlush', 'LawnGreen', 'LemonChiffon', 'LightBlue', 'LightCoral', 'LightCyan', 'LightGoldenRodYellow', 'LightGray', 'LightGreen', 'LightPink', 'LightSalmon', 'LightSeaGreen', 'LightSkyBlue', 'LightSlateGray', 'LightSteelBlue', 'LightYellow', 'Lime', 'LimeGreen', 'Linen', 'Magenta', 'Maroon', 'MediumAquaMarine', 'MediumBlue', 'MediumOrchid', 'MediumPurple', 'MediumSeaGreen', 'MediumSlateBlue', 'MediumSpringGreen', 'MediumTurquoise', 'MediumVioletRed', 'MidnightBlue', 'MintCream', 'MistyRose', 'Moccasin', 'NavajoWhite', 'Navy', 'OldLace', 'Olive', 'OliveDrab', 'Orange', 'OrangeRed', 'Orchid', 'PaleGoldenRod', 'PaleGreen', 'PaleTurquoise', 'PaleVioletRed', 'PapayaWhip', 'PeachPuff', 'Peru', 'Pink', 'Plum', 'PowderBlue', 'Purple', 'Red', 'RosyBrown', 'RoyalBlue', 'SaddleBrown', 'Salmon', 'SandyBrown', 'SeaGreen', 'SeaShell', 'Sienna', 'Silver', 'SkyBlue', 'SlateBlue', 'SlateGray', 'Snow', 'SpringGreen', 'SteelBlue', 'Tan', 'Teal', 'Thistle', 'Tomato', 'Turquoise', 'Violet', 'Wheat', 'White', 'WhiteSmoke', 'Yellow', 'YellowGreen'];
-	const getColours = numberOfColours => {
-	  const shuffledColours = allColours.sort(() => 0.5 - Math.random());
-	  const selectedColours = shuffledColours.slice(0, numberOfColours);
+	const getColours = things => {
+	  things.length;
+	  let selectedColours = [];
+	  {
+	    for (const thing of things) {
+	      const stringValue = getNumberFromString(thing);
+	      const stringValueRemainder = stringValue % allColours.length;
+	      selectedColours.push(allColours[stringValueRemainder]);
+	    }
+	  }
 	  return selectedColours;
 	};
 
-	const makeText = (index, text, container, radius, angle, padding) => {
+	const makeText = (index, text, container, radius, angle, padding, colour) => {
 	  const newTextDiv = document.createElement('div');
 	  newTextDiv.classList.add('optionText');
-	  newTextDiv.innerHTML = `<p class="option" id="option${index}">${text}</p>`;
+	  newTextDiv.innerHTML = `<p class="option" id="option${index}" data-colour="${colour}">${text}</p>`;
 	  container.append(newTextDiv);
 	  newTextDiv.style.left = `${padding}px`;
 	  newTextDiv.style.top = `calc(50% - ${newTextDiv.offsetHeight / 2}px`;
@@ -106,7 +109,7 @@
 	      const padding = 10;
 	      const radius = centrePoint - padding;
 	      const sectionAngle = 360 / things.length;
-	      const wheelColours = getColours(things.length);
+	      const wheelColours = getColours(things);
 	      boundingEl.style.width = `${maxDim}px`;
 	      boundingEl.style.height = `${maxDim}px`;
 	      canvas.width = maxDim;
@@ -117,27 +120,27 @@
 	        buttonsEl.style.flexGrow = 1;
 	        verticalCentre = boundingEl.offsetHeight / 2;
 	      }
-	      for (let index in things) {
+	      for (const index in things) {
 	        if (Object.hasOwn(things, index)) {
 	          // draw segments
-	          index = Number.parseInt(index, 10);
-	          const angle = index * sectionAngle;
+	          const parseIndex = Number.parseInt(index, 10);
+	          const angle = parseIndex * sectionAngle;
 	          const angleRad = degToRad(angle);
 	          const lineX = radius * cosDeg(angle);
 	          const lineY = radius * sinDeg(angle);
-	          const nextAngle = (index + 1) * sectionAngle;
+	          const nextAngle = (parseIndex + 1) * sectionAngle;
 	          const nextAngleRad = degToRad(nextAngle);
 	          ctx.beginPath();
 	          ctx.moveTo(centrePoint, centrePoint);
 	          ctx.lineTo(centrePoint + lineX, centrePoint + lineY);
 	          ctx.arc(centrePoint, centrePoint, radius, angleRad, nextAngleRad, false);
-	          ctx.fillStyle = wheelColours[index];
+	          ctx.fillStyle = wheelColours[parseIndex];
 	          ctx.fill();
 	          ctx.closePath();
 
 	          // render text DIVs
-	          const textAngle = Number.parseInt(-angle - sectionAngle / 2, 10);
-	          makeText(index, things[index], container, radius, textAngle, padding);
+	          const textAngle = Number.parseInt(angle + sectionAngle / 2, 10);
+	          makeText(parseIndex, things[parseIndex], container, radius, textAngle, padding, wheelColours[parseIndex]);
 	        }
 	      }
 	      ctx.lineWidth = 2;
@@ -146,7 +149,8 @@
 	      // draw dividing lines
 	      for (const index in things) {
 	        if (Object.hasOwn(things, index)) {
-	          const angle = index * sectionAngle;
+	          const parseIndex = Number.parseInt(index, 10);
+	          const angle = parseIndex * sectionAngle;
 	          const lineX = radius * cosDeg(angle);
 	          const lineY = radius * sinDeg(angle);
 	          ctx.beginPath();
@@ -340,10 +344,10 @@
 	const getTarget = forceTarget => {
 	  const targetThingIndex = forceTarget || Math.floor(Math.random() * currentThings.length);
 	  document.querySelector(`#option${targetThingIndex}`).classList.add('winner');
+	  console.log(`winner: ${currentThings[targetThingIndex]}`);
 	  const sectionAngle = 360 / currentThings.length;
-	  const targetRotation = Math.round(targetThingIndex * sectionAngle + sectionAngle / 2);
-	  const extraSpins = 3;
-	  return targetRotation + extraSpins * 360;
+	  const targetRotation = Math.round((targetThingIndex + 1) * -sectionAngle + sectionAngle / 2);
+	  return targetRotation;
 	};
 	const getCurrentRotation = () => {
 	  const el = document.querySelector('article');
@@ -351,7 +355,8 @@
 	  const currTrans = currStyle.getPropertyValue('transform');
 	  const values = currTrans.split('(')[1].split(')')[0].split(',');
 	  const currAngle = Math.round(Math.atan2(values[1], values[0]) * (180 / Math.PI));
-	  return currAngle > 0 ? currAngle : currAngle + 360;
+	  let returnAngle = currAngle;
+	  return returnAngle;
 	};
 	const stop = forceTarget => {
 	  const el = document.querySelector('article');
@@ -362,8 +367,13 @@
 	    el.classList.add('stopping');
 	    el.style.transform = `perspective(none) rotate(${currentRotation}deg)`;
 	    const targetRotation = getTarget(forceTarget);
-	    const extraSpins = Math.round(Math.random() * 5);
-	    const spindownDurationSeconds = 3 + extraSpins / 2;
+	    const extraSpins = 2 + Math.round(Math.random() * 3);
+	    const spindownDurationSeconds = 2 + extraSpins / 2;
+
+	    // console.log(`extraSpins: ${extraSpins}`);
+	    // console.log(`currentRotation: ${currentRotation}`);
+	    // console.log(`targetRotation: ${targetRotation}`);
+
 	    const spinToStop = [{
 	      transform: `perspective(none) rotate(${currentRotation}deg)`
 	    }, {
@@ -400,11 +410,9 @@
 	if (document.querySelector('#wheel-holder')) {
 	  const providedThings = getThingsFromURL();
 	  const things = providedThings ? providedThings : pickDefaultThings();
+	  // currentThings = things;
 	  currentThings = shuffle(things);
 	  window.addEventListener('load', () => {
-	    if (checkWEI()) {
-	      return;
-	    }
 	    initWot(currentThings);
 	    console.log(`${currentThings.length} things on the wheel`);
 	    lapBanner.init();

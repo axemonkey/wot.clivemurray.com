@@ -6,14 +6,10 @@ import {
 	removeThing,
 	checkInput,
 } from './modules/form.js';
-import {checkWEI} from './modules/tools.js';
 
 // events
 if (document.querySelector('#enter-things')) {
 	window.addEventListener('load', () => {
-		if (checkWEI()) {
-			return;
-		}
 		initForm();
 	});
 

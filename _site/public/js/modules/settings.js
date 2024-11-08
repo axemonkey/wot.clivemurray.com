@@ -1,7 +1,9 @@
-const minThings = 2;
-const maxThings = 20;
+const OPTIONS = {
+	MIN_THINGS: 2,
+	MAX_THINGS: 20,
+	COLOUR_SELECTION_METHOD: 2,
+};
 
 export {
-	minThings,
-	maxThings,
+	OPTIONS,
 };

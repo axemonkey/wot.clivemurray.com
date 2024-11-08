@@ -1,5 +1,5 @@
 import {getThingsFromURL} from './tools.js';
-import {minThings, maxThings} from './settings.js';
+import {OPTIONS} from './settings.js';
 
 const initForm = () => {
 	const urlThings = getThingsFromURL();
@@ -47,7 +47,7 @@ const addThing = thingValue => {
 	const theThings = allThings.querySelectorAll('.thing-entry');
 	const currentNumberOfThings = theThings.length;
 
-	if (currentNumberOfThings < maxThings) {
+	if (currentNumberOfThings < OPTIONS.MAX_THINGS) {
 		// add thing
 		const newThingDiv = document.createElement('div');
 		const newThingLabel = document.createElement('label');
@@ -102,7 +102,7 @@ const removeThing = thingButton => {
 	const theThings = allThings.querySelectorAll('.thing-entry');
 	const currentNumberOfThings = theThings.length;
 
-	if (currentNumberOfThings > minThings) {
+	if (currentNumberOfThings > OPTIONS.MIN_THINGS) {
 		const thingEntry = thingButton.parentNode;
 		thingEntry.parentNode.removeChild(thingEntry);
 		renumberThings();

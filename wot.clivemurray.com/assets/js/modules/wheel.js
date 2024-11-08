@@ -1,10 +1,10 @@
 import {degToRad, cosDeg, sinDeg} from './maths.js';
 import {getColours} from './colours.js';
 
-const makeText = (index, text, container, radius, angle, padding) => {
+const makeText = (index, text, container, radius, angle, padding, colour) => {
 	const newTextDiv = document.createElement('div');
 	newTextDiv.classList.add('optionText');
-	newTextDiv.innerHTML = `<p class="option" id="option${index}">${text}</p>`;
+	newTextDiv.innerHTML = `<p class="option" id="option${index}" data-colour="${colour}">${text}</p>`;
 	container.append(newTextDiv);
 	newTextDiv.style.left = `${padding}px`;
 	newTextDiv.style.top = `calc(50% - ${newTextDiv.offsetHeight / 2}px`;
@@ -54,7 +54,7 @@ const initWot = things => {
 			const padding = 10;
 			const radius = centrePoint - padding;
 			const sectionAngle = 360 / things.length;
-			const wheelColours = getColours(things.length);
+			const wheelColours = getColours(things);
 
 			boundingEl.style.width = `${maxDim}px`;
 			boundingEl.style.height = `${maxDim}px`;
@@ -68,28 +68,28 @@ const initWot = things => {
 				verticalCentre = boundingEl.offsetHeight / 2;
 			}
 
-			for (let index in things) {
+			for (const index in things) {
 				if (Object.hasOwn(things, index)) {
 					// draw segments
-					index = Number.parseInt(index, 10);
-					const angle = index * sectionAngle;
+					const parseIndex = Number.parseInt(index, 10);
+					const angle = parseIndex * sectionAngle;
 					const angleRad = degToRad(angle);
 					const lineX = (radius * cosDeg(angle));
 					const lineY = (radius * sinDeg(angle));
-					const nextAngle = (index + 1) * sectionAngle;
+					const nextAngle = (parseIndex + 1) * sectionAngle;
 					const nextAngleRad = degToRad(nextAngle);
 
 					ctx.beginPath();
 					ctx.moveTo(centrePoint, centrePoint);
 					ctx.lineTo(centrePoint + lineX, centrePoint + lineY);
 					ctx.arc(centrePoint, centrePoint, radius, angleRad, nextAngleRad, false);
-					ctx.fillStyle = wheelColours[index];
+					ctx.fillStyle = wheelColours[parseIndex];
 					ctx.fill();
 					ctx.closePath();
 
 					// render text DIVs
-					const textAngle = Number.parseInt(-angle - (sectionAngle / 2), 10);
-					makeText(index, things[index], container, radius, textAngle, padding);
+					const textAngle = Number.parseInt(angle + (sectionAngle / 2), 10);
+					makeText(parseIndex, things[parseIndex], container, radius, textAngle, padding, wheelColours[parseIndex]);
 				}
 			}
 
@@ -99,7 +99,8 @@ const initWot = things => {
 			// draw dividing lines
 			for (const index in things) {
 				if (Object.hasOwn(things, index)) {
-					const angle = index * sectionAngle;
+					const parseIndex = Number.parseInt(index, 10);
+					const angle = parseIndex * sectionAngle;
 					const lineX = (radius * cosDeg(angle));
 					const lineY = (radius * sinDeg(angle));
 					ctx.beginPath();

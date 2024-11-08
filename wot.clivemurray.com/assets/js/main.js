@@ -1,4 +1,7 @@
-import {getThingsFromURL, shuffle, checkWEI} from './modules/tools.js';
+import {
+	getThingsFromURL,
+	shuffle,
+} from './modules/tools.js';
 import {initWot} from './modules/wheel.js';
 import {lapBanner} from './modules/lap-banner.js';
 
@@ -104,10 +107,10 @@ const highlightWinner = () => {
 const getTarget = forceTarget => {
 	const targetThingIndex = forceTarget || Math.floor(Math.random() * currentThings.length);
 	document.querySelector(`#option${targetThingIndex}`).classList.add('winner');
+	console.log(`winner: ${currentThings[targetThingIndex]}`);
 	const sectionAngle = 360 / currentThings.length;
-	const targetRotation = Math.round((targetThingIndex * sectionAngle) + (sectionAngle / 2));
-	const extraSpins = 3;
-	return targetRotation + (extraSpins * 360);
+	const targetRotation = Math.round(((targetThingIndex + 1) * -sectionAngle) + (sectionAngle / 2));
+	return targetRotation;
 };
 
 const getCurrentRotation = () => {
@@ -116,7 +119,8 @@ const getCurrentRotation = () => {
 	const currTrans = currStyle.getPropertyValue('transform');
 	const values = currTrans.split('(')[1].split(')')[0].split(',');
 	const currAngle = Math.round(Math.atan2(values[1], values[0]) * (180 / Math.PI));
-	return (currAngle > 0 ? currAngle : currAngle + 360);
+	let returnAngle = currAngle;
+	return returnAngle;
 };
 
 const stop = forceTarget => {
@@ -128,8 +132,12 @@ const stop = forceTarget => {
 		el.classList.add('stopping');
 		el.style.transform = `perspective(none) rotate(${currentRotation}deg)`;
 		const targetRotation = getTarget(forceTarget);
-		const extraSpins = Math.round(Math.random() * 5);
-		const spindownDurationSeconds = 3 + (extraSpins / 2);
+		const extraSpins = 2 + Math.round(Math.random() * 3);
+		const spindownDurationSeconds = 2 + (extraSpins / 2);
+
+		// console.log(`extraSpins: ${extraSpins}`);
+		// console.log(`currentRotation: ${currentRotation}`);
+		// console.log(`targetRotation: ${targetRotation}`);
 
 		const spinToStop = [
 			{
@@ -173,12 +181,10 @@ const toggle = () => {
 if (document.querySelector('#wheel-holder')) {
 	const providedThings = getThingsFromURL();
 	const things = providedThings ? providedThings : pickDefaultThings();
+	// currentThings = things;
 	currentThings = shuffle(things);
 
 	window.addEventListener('load', () => {
-		if (checkWEI()) {
-			return;
-		}
 		initWot(currentThings);
 		console.log(`${currentThings.length} things on the wheel`);
 		lapBanner.init();
