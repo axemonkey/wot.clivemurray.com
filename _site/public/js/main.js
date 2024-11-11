@@ -9,6 +9,7 @@ import {lapBanner} from './modules/lap-banner.js';
 
 TODO:
 
+* when coming from all games (over 20 items) to the form, don't lose items over 20
 * store lists of Things in data files (JSON)
 	* the front-end JS for the wheel can read from JSON files
 	* 11ty can read JSON data into the NJK templates
@@ -30,7 +31,6 @@ const numberOfGamesThingsToPick = 12;
 const allGamesThings = [
 	'Bag of Dungeon',
 	'Boss Monster',
-	'Boss Monster: The Next Level',
 	'Cluedo',
 	'Doomlings',
 	'Dragonrealm',
