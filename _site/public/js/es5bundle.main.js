@@ -188,7 +188,7 @@
 
 	const lapBanner = {
 	  storageKey: 'loveAndPainkillers-banner-config',
-	  numberOfDaysToHideBanner: 60,
+	  numberOfDaysToHideBanner: 90,
 	  init: () => {
 	    // if not cookie
 	    if (lapBanner.cookieCheck()) {
@@ -309,7 +309,6 @@
 	// ['Iron Man', 'Captain America', 'The Hulk', 'Thor', 'Ant-Man', 'Doctor Strange', 'Spider-Man', 'Black Panther', 'Captain Marvel', 'Scarlet Witch', 'Black Widow', 'Hawkeye', 'Vision'],
 	// ['Star Wars', 'Star Trek', 'Harry Potter', 'Lord of the Rings', 'The Avengers', 'Batman', 'James Bond'],
 	];
-
 	const pickDefaultThings = () => {
 	  return defaultThings[Math.floor(Math.random() * defaultThings.length)];
 	};
