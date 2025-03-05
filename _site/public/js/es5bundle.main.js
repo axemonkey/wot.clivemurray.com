@@ -143,7 +143,7 @@
 	          makeText(parseIndex, things[parseIndex], container, radius, textAngle, padding, wheelColours[parseIndex]);
 	        }
 	      }
-	      ctx.lineWidth = 2;
+	      ctx.lineWidth = 1;
 	      ctx.strokeStyle = 'rgb(0, 0, 0)';
 
 	      // draw dividing lines
@@ -303,7 +303,7 @@
 
 	let currentThings;
 	const numberOfGamesThingsToPick = 12;
-	const allGamesThings = ['Bag of Dungeon', 'Boss Monster', 'Cluedo', 'Doomlings', 'Dragonrealm', 'Dragonwood', 'Escape the Dark Castle', 'Escape the Dark Sector', 'Exploding Kittens', 'Forbidden Desert', 'Forbidden Island', 'Forbidden Jungle', 'Forbidden Sky', 'Grimwood', 'Gubs', 'Here to Slay', 'Labyrinth', 'Martian Fluxx', 'Munchkin', 'Munchkin: Critical Role', 'Munchkin: Marvel', 'Selfish: Space Edition', 'Selfish: Zombie Edition', 'Star Fluxx', 'Sushi Go', 'Unearth', 'Uno Flip', 'Unstable Unicorns'];
+	const allGamesThings = ['7 Moons', 'Bag of Dungeon', 'Boss Monster', 'Cluedo', 'Doomlings', 'Dragonrealm', 'Dragonwood', 'Escape the Dark Castle', 'Escape the Dark Sector', 'Exploding Kittens', 'Forbidden Desert', 'Forbidden Island', 'Forbidden Jungle', 'Forbidden Sky', 'Grimwood', 'Gubs', 'Here to Slay', 'Labyrinth', 'Martian Fluxx', 'Munchkin', 'Munchkin: Critical Role', 'Munchkin: Marvel', 'Selfish: Space Edition', 'Selfish: Zombie Edition', 'Squirmish', 'Star Fluxx', 'Sushi Go', 'Unearth', 'Uno Flip', 'Unstable Unicorns'];
 	const defaultThings = [['Pizza', 'Burger', 'Thai', 'Fryup', 'Indian', 'Chinese', 'Sushi', 'Pasta', 'Tex-Mex']
 	// ['Horror', 'Comedy', 'Action', 'Drama', 'Sci-Fi', 'Documentary', 'Thriller'],
 	// ['Iron Man', 'Captain America', 'The Hulk', 'Thor', 'Ant-Man', 'Doctor Strange', 'Spider-Man', 'Black Panther', 'Captain Marvel', 'Scarlet Witch', 'Black Widow', 'Hawkeye', 'Vision'],

@@ -29,6 +29,7 @@ let currentThings;
 const numberOfGamesThingsToPick = 12;
 
 const allGamesThings = [
+	'7 Moons',
 	'Bag of Dungeon',
 	'Boss Monster',
 	'Cluedo',
@@ -52,6 +53,7 @@ const allGamesThings = [
 	'Munchkin: Marvel',
 	'Selfish: Space Edition',
 	'Selfish: Zombie Edition',
+	'Squirmish',
 	'Star Fluxx',
 	'Sushi Go',
 	'Unearth',

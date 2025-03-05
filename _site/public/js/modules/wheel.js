@@ -93,7 +93,7 @@ const initWot = things => {
 				}
 			}
 
-			ctx.lineWidth = 2;
+			ctx.lineWidth = 1;
 			ctx.strokeStyle = 'rgb(0, 0, 0)';
 
 			// draw dividing lines
