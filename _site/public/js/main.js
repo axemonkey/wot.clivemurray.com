@@ -3,7 +3,6 @@ import {
 	shuffle,
 } from './modules/tools.js';
 import {initWot} from './modules/wheel.js';
-import {lapBanner} from './modules/lap-banner.js';
 
 /*
 
@@ -189,7 +188,6 @@ if (document.querySelector('#wheel-holder')) {
 	window.addEventListener('load', () => {
 		initWot(currentThings);
 		console.log(`${currentThings.length} things on the wheel`);
-		lapBanner.init();
 	});
 
 	window.addEventListener('resize', () => {
