@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../assets/js/help.js"],
+  "sourcesContent": ["const initPage = () => {\n\tdocument.addEventListener(\"click\", (event) => {\n\t\tif (event.target.classList.contains(\"back-link\")) {\n\t\t\tevent.preventDefault();\n\t\t\twindow.history.back();\n\t\t}\n\t});\n};\n\nwindow.addEventListener(\"load\", () => {\n\tinitPage();\n});\n"],
+  "mappings": "MAAA,IAAMA,EAAW,IAAM,CACtB,SAAS,iBAAiB,QAAUC,GAAU,CACzCA,EAAM,OAAO,UAAU,SAAS,WAAW,IAC9CA,EAAM,eAAe,EACrB,OAAO,QAAQ,KAAK,EAEtB,CAAC,CACF,EAEA,OAAO,iBAAiB,OAAQ,IAAM,CACrCD,EAAS,CACV,CAAC",
+  "names": ["initPage", "event"]
+}

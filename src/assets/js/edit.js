@@ -5,51 +5,51 @@ import {
 	resetThings,
 	removeThing,
 	checkInput,
-} from './modules/form.js';
+} from "./modules/form.js";
 
 // events
-if (document.querySelector('#enter-things')) {
-	window.addEventListener('load', () => {
+if (document.querySelector("#enter-things")) {
+	window.addEventListener("load", () => {
 		initForm();
 	});
 
-	document.querySelector('#go').addEventListener('click', event => {
+	document.querySelector("#go").addEventListener("click", (event) => {
 		event.preventDefault();
 		submitThings();
 	});
 
-	document.querySelector('#cancel').addEventListener('click', event => {
+	document.querySelector("#cancel").addEventListener("click", (event) => {
 		event.preventDefault();
 		window.history.go(-1);
 	});
 
-	document.querySelector('#addThing').addEventListener('click', event => {
+	document.querySelector("#addThing").addEventListener("click", (event) => {
 		event.preventDefault();
 		addThing();
 	});
 
-	document.querySelector('#resetThings').addEventListener('click', event => {
+	document.querySelector("#resetThings").addEventListener("click", (event) => {
 		event.preventDefault();
 		resetThings();
 	});
 
-	document.addEventListener('click', event => {
-		if (event.target.classList.contains('removeThing')) {
+	document.addEventListener("click", (event) => {
+		if (event.target.classList.contains("removeThing")) {
 			event.preventDefault();
 			removeThing(event.target);
 		}
 	});
 
-	document.addEventListener('keypress', event => {
-		if (event.target.classList.contains('thing-value')) {
+	document.addEventListener("keypress", (event) => {
+		if (event.target.classList.contains("thing-value")) {
 			window.setTimeout(() => {
 				checkInput(event);
 			}, 100);
 		}
 	});
 
-	document.addEventListener('paste', event => {
-		if (event.target.classList.contains('thing-value')) {
+	document.addEventListener("paste", (event) => {
+		if (event.target.classList.contains("thing-value")) {
 			window.setTimeout(() => {
 				checkInput(event);
 			}, 100);

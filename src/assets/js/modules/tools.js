@@ -1,13 +1,14 @@
 const getThingsFromURL = () => {
 	let urlThings;
 	const params = new URLSearchParams(document.location.search);
-	if (params.get('things')) {
-		urlThings = decodeURIComponent(params.get('things')).split('^');
+	if (params.get("things")) {
+		urlThings = decodeURIComponent(params.get("things")).split("^");
 	}
 	return urlThings;
 };
 
-const shuffle = arr => { // randomly rearanges the items in an array
+const shuffle = (arr) => {
+	// randomly rearanges the items in an array
 	const result = [];
 	for (let i = arr.length - 1; i >= 0; i--) {
 		// picks an integer between 0 and i:
@@ -26,7 +27,7 @@ const shuffle = arr => { // randomly rearanges the items in an array
 	return result;
 };
 
-const getNumberFromString = string => {
+const getNumberFromString = (string) => {
 	let total = 0;
 	for (let index = 0; index < string.length; index++) {
 		total += string.charCodeAt(index);
@@ -35,8 +36,4 @@ const getNumberFromString = string => {
 	return total;
 };
 
-export {
-	getThingsFromURL,
-	shuffle,
-	getNumberFromString,
-};
+export { getThingsFromURL, shuffle, getNumberFromString };

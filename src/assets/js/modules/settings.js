@@ -4,6 +4,4 @@ const OPTIONS = {
 	COLOUR_SELECTION_METHOD: 2,
 };
 
-export {
-	OPTIONS,
-};
+export { OPTIONS };
