@@ -1,9 +1,9 @@
-import { degToRad, cosDeg, sinDeg } from "./maths.js";
-import { getColours } from "./colours.js";
+import { degToRad, cosDeg, sinDeg } from './maths.js';
+import { getColours } from './colours.js';
 
 const makeText = (index, text, container, radius, angle, padding, colour) => {
-	const newTextDiv = document.createElement("div");
-	newTextDiv.classList.add("optionText");
+	const newTextDiv = document.createElement('div');
+	newTextDiv.classList.add('optionText');
 	newTextDiv.innerHTML = `<p class="option" id="option${index}" data-colour="${colour}">${text}</p>`;
 	container.append(newTextDiv);
 	newTextDiv.style.left = `${padding}px`;
@@ -13,41 +13,41 @@ const makeText = (index, text, container, radius, angle, padding, colour) => {
 };
 
 const setupMain = () => {
-	const boundingEl = document.querySelector("main");
-	boundingEl.innerHTML = "";
-	const newArticle = document.createElement("article");
-	const wheelCanvas = document.createElement("canvas");
-	const pointerCanvas = document.createElement("canvas");
-	wheelCanvas.classList.add("wheel");
-	pointerCanvas.classList.add("pointer");
+	const boundingEl = document.querySelector('main');
+	boundingEl.innerHTML = '';
+	const newArticle = document.createElement('article');
+	const wheelCanvas = document.createElement('canvas');
+	const pointerCanvas = document.createElement('canvas');
+	wheelCanvas.classList.add('wheel');
+	pointerCanvas.classList.add('pointer');
 	newArticle.append(wheelCanvas);
 	boundingEl.append(newArticle);
 	boundingEl.append(pointerCanvas);
 
-	const buttons = document.querySelectorAll(".buttons button");
+	const buttons = document.querySelectorAll('.buttons button');
 	for (const button of buttons) {
-		button.classList.add("yay");
+		button.classList.add('yay');
 	}
 };
 
 const initWot = (things) => {
 	let portrait = false;
-	if (document.querySelector("#wheel-holder")) {
-		document.body.classList.add("js");
-		document.body.classList.add("wheelpage");
+	if (document.querySelector('#wheel-holder')) {
+		document.body.classList.add('js');
+		document.body.classList.add('wheelpage');
 		if (document.body.offsetHeight > document.body.offsetWidth) {
-			document.body.classList.add("portrait");
+			document.body.classList.add('portrait');
 			portrait = true;
 		}
 		setupMain();
 
-		const container = document.querySelector("article");
-		const canvas = document.querySelector(".wheel");
+		const container = document.querySelector('article');
+		const canvas = document.querySelector('.wheel');
 		if (canvas.getContext) {
-			const ctx = canvas.getContext("2d");
-			const boundingEl = document.querySelector("main");
-			const headerEl = document.querySelector("header");
-			const buttonsEl = document.querySelector(".buttons");
+			const ctx = canvas.getContext('2d');
+			const boundingEl = document.querySelector('main');
+			const headerEl = document.querySelector('header');
+			const buttonsEl = document.querySelector('.buttons');
 			const maxDim = Math.min(boundingEl.offsetWidth, boundingEl.offsetHeight);
 			const centrePoint = maxDim / 2;
 			let verticalCentre = boundingEl.offsetHeight / 2;
@@ -109,7 +109,7 @@ const initWot = (things) => {
 			}
 
 			ctx.lineWidth = 1;
-			ctx.strokeStyle = "rgb(0, 0, 0)";
+			ctx.strokeStyle = 'rgb(0, 0, 0)';
 
 			// draw dividing lines
 			for (const index in things) {
@@ -134,17 +134,17 @@ const initWot = (things) => {
 			ctx.closePath();
 
 			// draw pointer
-			const pointerCanvas = document.querySelector(".pointer");
+			const pointerCanvas = document.querySelector('.pointer');
 			if (pointerCanvas.getContext) {
 				pointerCanvas.style.top = `${verticalCentre - 20}px`;
-				const pctx = pointerCanvas.getContext("2d");
+				const pctx = pointerCanvas.getContext('2d');
 				pointerCanvas.width = 100;
 				pointerCanvas.height = 40;
 				pctx.beginPath();
 				pctx.moveTo(100, 40);
 				pctx.lineTo(100, 0);
 				pctx.lineTo(60, 20);
-				pctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+				pctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
 				pctx.fill();
 			}
 		}

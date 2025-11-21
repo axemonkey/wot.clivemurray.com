@@ -1,8 +1,8 @@
 const getThingsFromURL = () => {
 	let urlThings;
 	const params = new URLSearchParams(document.location.search);
-	if (params.get("things")) {
-		urlThings = decodeURIComponent(params.get("things")).split("^");
+	if (params.get('things')) {
+		urlThings = decodeURIComponent(params.get('things')).split('^');
 	}
 	return urlThings;
 };
