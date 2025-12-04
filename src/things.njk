@@ -8,11 +8,11 @@ script: edit
 	<header>
 		<h1>The Wheel of Things</h1>
 		<h2>Enter your own things!</h2>
-		<p class="instruction">You must have at least 2, and no more than 30.</p>
 	</header>
 	<main id="enter-things">
 		<form>
 			<fieldset>
+				<p class="instruction">You must have at least 2, and no more than 30.</p>
 				<div class="all-things">
 					{% for index in range(1, 4) %}
 						<div class="thing-entry">

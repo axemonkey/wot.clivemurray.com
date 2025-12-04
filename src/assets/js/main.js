@@ -147,7 +147,7 @@ const stop = (forceTarget) => {
 		el.classList.add('stopping');
 		el.style.transform = `perspective(none) rotate(${currentRotation}deg)`;
 		const targetRotation = getTarget(forceTarget);
-		const extraSpins = 2 + Math.round(Math.random() * 3);
+		const extraSpins = 4 + Math.round(Math.random() * 4);
 		const spindownDurationSeconds = 2 + extraSpins / 2;
 
 		// console.log(`extraSpins: ${extraSpins}`);

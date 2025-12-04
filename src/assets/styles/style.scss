@@ -26,26 +26,27 @@
 	}
 }
 
+// Comfortaa
 @font-face {
-	font-family: "Bodoni72OldStyle";
-	src: url("/public/fonts/BodoniSvtyTwoOSITCTT-BookIt.woff2") format("woff2");
-	font-weight: normal;
-	font-style: italic;
+	font-family: "Comfortaa";
+	src: url("/public/fonts/Comfortaa-VariableFont_wght.woff2") format("woff2");
+	font-style: normal;
 }
 
 @font-face {
-	font-family: "OswaldLight";
-	src: url("/public/fonts/Oswald-Light.woff2") format("woff2");
-	font-weight: normal;
-	font-style: normal;
+	font-family: "GreveVariable"; // by Matthew Hinders-Anderson - https://wehtt.am/fonts
+	src: url("/public/fonts/greve-variable.woff2")
+			format("woff2 supports variations"),
+		url("/public/fonts/greve-variable.woff2") format("woff2-variations");
+	font-weight: 100 900;
 }
 
 $min_width: 320px;
 $max_width: 1200px;
-$min_font: 10px;
-$max_font: 20px;
-$headingFont: "Bodoni72OldStyle", georgia, serif;
-$itemFont: "OswaldLight", sans-serif;
+$min_font: 15px;
+$max_font: 25px;
+$headingFont: "Comfortaa", georgia, serif;
+$itemFont: "GreveVariable", sans-serif;
 
 * {
 	margin: 0;
@@ -56,6 +57,8 @@ html,
 body {
 	height: 100%;
 	font-family: $itemFont;
+	font-weight: 200;
+	font-variation-settings: "wdth" 250;
 	background-color: #303;
 
 	@include fluid-type($min_width, $max_width, $min_font, $max_font);
@@ -90,11 +93,13 @@ h2 {
 }
 
 h1 {
-	font-size: 4em;
+	font-size: 3em;
+	font-weight: normal;
 }
 
 h2 {
-	font-size: 2.5em;
+	font-size: 2em;
+	font-weight: normal;
 }
 
 ul + p {
@@ -103,8 +108,10 @@ ul + p {
 
 p.instruction {
 	font-family: $headingFont;
-	font-size: 1.5em;
+	font-weight: normal;
+	font-size: 1.2em;
 	margin: 10px auto;
+	text-align: center;
 }
 
 main {
@@ -194,6 +201,7 @@ body.js .buttons {
 button {
 	font-size: 2em;
 	font-family: $itemFont;
+	font-weight: 200;
 	padding: 1rem 2rem;
 	border-radius: 1rem;
 	border: none;
@@ -248,6 +256,7 @@ fieldset,
 .thing-entry input {
 	font-size: 1.5em;
 	font-family: $itemFont;
+	font-weight: 200;
 	border: 5px solid transparent;
 }
 
@@ -310,6 +319,8 @@ fieldset,
 }
 
 .support {
+	margin: 1em;
+
 	p {
 		text-align: right;
 		margin: 0 0 5px;
@@ -333,6 +344,7 @@ body.wheelpage {
 		position: absolute;
 		right: 1em;
 		bottom: 1em;
+		margin: 0;
 	}
 }
 
@@ -354,16 +366,14 @@ body.wheelpage {
 .top-link a,
 .support a,
 .copy-panel a,
-.examples a,
-.drm-notice a {
+.examples a {
 	color: #eee;
 }
 
 .top-link a:hover,
 .support a:hover,
 .copy-panel a:hover,
-.examples a:hover,
-.drm-notice a:hover {
+.examples a:hover {
 	color: #fff;
 }
 
@@ -391,22 +401,6 @@ ul li {
 	cursor: pointer;
 }
 
-.drm-notice {
-	max-width: 600px;
-
-	h1 {
-		font-size: 3em;
-		margin-bottom: 1em;
-	}
-
-	p,
-	li {
-		font-size: 1.4em;
-		margin-top: 0;
-		margin-bottom: 1em;
-
-		&:last-child {
-			margin-bottom: 0;
-		}
-	}
+strong {
+	font-weight: 650;
 }
