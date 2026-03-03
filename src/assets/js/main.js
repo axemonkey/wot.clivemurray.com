@@ -27,6 +27,7 @@ const numberOfGamesThingsToPick = 12;
 const allGamesThings = [
 	'7 Moons',
 	'Bag of Dungeon',
+	'Bonsai',
 	'Boss Monster',
 	'Cluedo',
 	'Doomlings',
@@ -42,6 +43,7 @@ const allGamesThings = [
 	'Forbidden Sky',
 	'Grimwood',
 	'Gubs',
+	'Harmonies',
 	'Here to Slay',
 	'The Isle of Cats',
 	'Labyrinth',
@@ -49,6 +51,7 @@ const allGamesThings = [
 	'Munchkin',
 	'Munchkin: Critical Role',
 	'Munchkin: Marvel',
+	'Scrabble',
 	// 'Selfish: Space Edition',
 	// 'Selfish: Zombie Edition',
 	'Squirmish',
