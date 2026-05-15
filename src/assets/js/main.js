@@ -53,7 +53,7 @@ const allGamesThings = [
 	'Munchkin: Marvel',
 	'Scrabble',
 	// 'Selfish: Space Edition',
-	// 'Selfish: Zombie Edition',
+	'Selfish: Zombie Edition',
 	'Squirmish',
 	'Star Fluxx',
 	'Sushi Go',
