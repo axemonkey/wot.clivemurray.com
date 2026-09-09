@@ -35,7 +35,8 @@
 
 @font-face {
 	font-family: "GreveVariable"; // by Matthew Hinders-Anderson - https://wehtt.am/fonts
-	src: url("/public/fonts/greve-variable.woff2")
+	src:
+		url("/public/fonts/greve-variable.woff2")
 			format("woff2 supports variations"),
 		url("/public/fonts/greve-variable.woff2") format("woff2-variations");
 	font-weight: 100 900;
@@ -162,8 +163,12 @@ article {
 		font-size: clamp(13px, min(2.5vh, 2.5vw), 34px);
 		padding-right: 30px;
 		color: #fff;
-		text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-			1px 1px 0 #000, 1px 0 10px #909;
+		text-shadow:
+			-1px -1px 0 #000,
+			1px -1px 0 #000,
+			-1px 1px 0 #000,
+			1px 1px 0 #000,
+			1px 0 10px #909;
 	}
 }
 
@@ -296,14 +301,28 @@ fieldset,
 @keyframes throbbe {
 	from {
 		font-size: 1.6em;
-		text-shadow: 0 0 1px #000, 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #f0f,
-			0 0 40px #0ff, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+		text-shadow:
+			0 0 1px #000,
+			0 0 10px #fff,
+			0 0 20px #fff,
+			0 0 30px #f0f,
+			0 0 40px #0ff,
+			0 0 50px #e60073,
+			0 0 60px #e60073,
+			0 0 70px #e60073;
 	}
 
 	to {
 		font-size: 1.625em;
-		text-shadow: 0 0 1px #000, 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6,
-			0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+		text-shadow:
+			0 0 1px #000,
+			0 0 20px #fff,
+			0 0 30px #ff4da6,
+			0 0 40px #ff4da6,
+			0 0 50px #ff4da6,
+			0 0 60px #ff4da6,
+			0 0 70px #ff4da6,
+			0 0 80px #ff4da6;
 	}
 }
 

@@ -88,7 +88,7 @@ const initWot = (things) => {
 						radius,
 						angleRad,
 						nextAngleRad,
-						false
+						false,
 					);
 					ctx.fillStyle = wheelColours[parseIndex];
 					ctx.fill();
@@ -103,7 +103,7 @@ const initWot = (things) => {
 						radius,
 						textAngle,
 						padding,
-						wheelColours[parseIndex]
+						wheelColours[parseIndex],
 					);
 				}
 			}

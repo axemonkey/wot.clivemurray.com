@@ -124,7 +124,7 @@ const getTarget = (forceTarget) => {
 	console.log(`winner: ${currentThings[targetThingIndex]}`);
 	const sectionAngle = 360 / currentThings.length;
 	const targetRotation = Math.round(
-		(targetThingIndex + 1) * -sectionAngle + sectionAngle / 2
+		(targetThingIndex + 1) * -sectionAngle + sectionAngle / 2,
 	);
 	return targetRotation;
 };
@@ -135,7 +135,7 @@ const getCurrentRotation = () => {
 	const currTrans = currStyle.getPropertyValue('transform');
 	const values = currTrans.split('(')[1].split(')')[0].split(',');
 	const currAngle = Math.round(
-		Math.atan2(values[1], values[0]) * (180 / Math.PI)
+		Math.atan2(values[1], values[0]) * (180 / Math.PI),
 	);
 	let returnAngle = currAngle;
 	return returnAngle;
@@ -223,7 +223,7 @@ if (document.querySelector('#wheel-holder')) {
 				? allGamesThings.length
 				: numberOfGamesThingsToPick;
 			const shuffledGamesThings = allGamesThings.sort(
-				() => 0.5 - Math.random()
+				() => 0.5 - Math.random(),
 			);
 			const gamesThings = shuffledGamesThings.slice(0, howMany);
 			const url = `/?things=${encodeURIComponent(gamesThings.join('^'))}`;
